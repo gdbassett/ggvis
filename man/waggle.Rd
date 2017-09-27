@@ -28,4 +28,3 @@ mtcars \%>\% ggvis(~mpg, ~wt) \%>\%
  layer_points() \%>\%
  layer_smooths(span = span)
 }
-

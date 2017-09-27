@@ -34,4 +34,3 @@ mtcars \%>\% ggvis(~wt, ~mpg) \%>\% layer_points()
 mtcars \%>\% ggvis() \%>\% add_props(~wt, ~mpg) \%>\% layer_points()
 mtcars \%>\% ggvis(~wt) \%>\% add_props(y = ~mpg) \%>\% layer_points()
 }
-

@@ -394,6 +394,24 @@ save_spec <- function(x, path, ...) {
   writeLines(json, path)
 }
 
+#' Export the ggvis vega schema json
+#'
+#' @param x a ggvis object
+# #' @param version vega version.  Defaults to 2
+#' @param ... other arguments passed to \code{as.vega}
+#' @export
+dump_spec <- function(x,
+                      # version=2,
+                      ...) {
+  assert_that(is.ggvis(x))
+
+  vega_obj <- as.vega(x, ...)
+
+  jsonlite::toJSON(vega_obj, pretty = TRUE, auto_unbox = TRUE,
+                   force = TRUE, null = "null")
+
+}
+
 #' @rdname save_spec
 view_spec <- function(path, ...) {
   contents <- paste0(readLines(path), collapse = "\n")

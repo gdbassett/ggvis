@@ -1,7 +1,7 @@
 #' Create a new ggvis_scale object.
 #'
 #' A scale object is a close mapping to a vega mark object. Vega scales
-#' are documented in \url{https://github.com/trifacta/vega/wiki/Scales}.
+#' are documented in \url{https://vega.github.io/vega/docs/scales/}.
 #'
 #' This function is designed to be used by authors of new types of scale.
 #' If you are a ggvis user, please use one of the more specific scale
@@ -16,8 +16,11 @@
 #' @param name Name of the scale, such as "x", "y", "fill", etc. Can also be an
 #'   arbitrary name like "foo".
 #' @param label Label for the scale. Used for axis or legend titles.
-#' @param type Type of scale. Should be one of "linear", "ordinal", "time",
-#'   "utc", "linear", "log", "pow", "sqrt", "quantile", "quantize", "threshold".
+#' @param type Type of scale. Should be one of:
+#'   Quantitative: "linear", "pow", "sqrt", "time", "utc", "sequential"
+#'   Discrete: "ordinal", "band", "point"
+#'   Discretizing: "quantile", "quantize", "threshold", "bin-linear",
+#'                 "bin-ordinal"
 #' @param domain The domain of the scale, representing the set of data values.
 #'   For ordinal scales, a character vector; for quantitative scales, a numeric
 #'   vector of length two. Either value (but not both) may be NA, in which
@@ -53,8 +56,9 @@ ggvis_scale <- function(property, name = property, label = name, type = NULL,
                         round = NULL, ..., subclass = NULL, override = NULL) {
   assert_that(is.string(name))
   assert_that(is.null(type) ||
-              type %in% c("linear", "ordinal", "time", "utc", "log", "pow",
-                          "sqrt", "quantile", "quantize", "threshold"))
+              type %in% c("linear", "pow", "sqrt", "log", "time", "utc", "sequential",
+                          "ordinal", "band", "point",
+                          "quantile", "quantize", "threshold", "bin-linear", "bin-ordinal"))
   assert_that(is.null(reverse) || is.flag(reverse),
               is.null(round) || is.flag(round))
 
@@ -96,7 +100,8 @@ as.vega.ggvis_scale <- function(x) {
     # Replace the domain with something that grabs it from the domain data
     x$domain <- list(
       data = paste0("scale/", x$name),
-      field = "data.domain"
+      # field = "data.domain"
+      field = "domain"
     )
   }
 

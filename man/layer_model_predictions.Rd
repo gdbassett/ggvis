@@ -89,4 +89,3 @@ mtcars \%>\%
   compute_smooth(mpg ~ wt) \%>\%
   layer_paths(~pred_, ~resp_, strokeWidth := 2)
 }
-

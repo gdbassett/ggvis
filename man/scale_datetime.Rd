@@ -94,4 +94,3 @@ p \%>\% scale_datetime("x", utc = TRUE)
 Other scales: \code{\link{scale_numeric}},
   \code{\link{scale_ordinal}}
 }
-

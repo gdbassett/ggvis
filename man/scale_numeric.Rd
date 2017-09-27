@@ -108,4 +108,3 @@ p \%>\% scale_numeric("x", domain = c(NA, 3), clamp = TRUE, nice = FALSE)
 Other scales: \code{\link{scale_datetime}},
   \code{\link{scale_ordinal}}
 }
-

@@ -2,8 +2,8 @@
 % Please edit documentation in R/print.R
 \name{print.ggvis}
 \alias{print.ggvis}
-\alias{view_dynamic}
 \alias{view_static}
+\alias{view_dynamic}
 \title{View in a ggvis plot in the browser.}
 \usage{
 \method{print}{ggvis}(x, dynamic = NA, launch = interactive(), ...)
@@ -54,4 +54,3 @@ outfile <- mtcars \%>\% ggvis(~wt, ~mpg) \%>\%
   view_static() \%>\% htmltools::html_print(viewer = NULL)
 }
 \keyword{internal}
-

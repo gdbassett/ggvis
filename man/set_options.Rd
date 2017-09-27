@@ -58,4 +58,3 @@ str(default_options())
 
 \code{\link{default_options}} to see the default options.
 }
-

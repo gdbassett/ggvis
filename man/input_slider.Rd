@@ -73,4 +73,3 @@ input_slider(-5, 5, label = "Log scale", map = function(x) 10 ^ x)
 Other interactive input: \code{\link{input_checkbox}},
   \code{\link{input_select}}, \code{\link{input_text}}
 }
-

@@ -73,4 +73,3 @@ mtcars2 \%>\% ggvis() \%>\% layer_histograms(~mpg)
   of a continuous variable. This is useful when the variable is continuous
   but the data is granular.
 }
-

@@ -1,3 +1,22 @@
+# ggvis 0.4.3.9XXX
+
+* Beginning of changes from gabriel bassett
+
+* added dump_spec() function modeled on save_spec to allow exporting vega schema json
+
+* changed 'properties' to 'encode' in as.vega.* functions.  Version 3 vega uses 'encode'
+  in place of 'properties'.  (https://vega.github.io/vega/docs/porting-guide/)  Now props
+  are heavily embedded in ggvis so I didn't touch that.  But I did touch the stuff used
+  to dump out the actual spec.  Also, I didn't bother creating a parameter to specify the
+  version so it's always going to use 'encode'.  (Note, this mean as of 0.4.3.9001, the 
+  spec is not valid as either version 2 or 3.  I'll work to fix that.)
+  
+* 9002: added additional scales to ggvis_scale() and changed scale_nominal form 'ordinal' to 'band'
+
+* 9003: updated vega.js and vega.min.js to 3.0.2
+
+* 9004: basic working flip().  NOTE: getting vega errors after javascript update so figures not displaying in rstudio.
+
 # ggvis 0.4.3
 
 * Switched from stripped-down build of jQuery UI to a full build. (#410)

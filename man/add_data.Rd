@@ -25,4 +25,3 @@ Add dataset to a visualisation
 mtcars \%>\% ggvis(~mpg, ~wt) \%>\% layer_points()
 NULL \%>\% ggvis(~mpg, ~wt) \%>\% add_data(mtcars) \%>\% layer_points()
 }
-

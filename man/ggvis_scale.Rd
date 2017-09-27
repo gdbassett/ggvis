@@ -20,8 +20,11 @@ arbitrary name like "foo".}
 
 \item{label}{Label for the scale. Used for axis or legend titles.}
 
-\item{type}{Type of scale. Should be one of "linear", "ordinal", "time",
-"utc", "linear", "log", "pow", "sqrt", "quantile", "quantize", "threshold".}
+\item{type}{Type of scale. Should be one of:
+Quantitative: "linear", "pow", "sqrt", "time", "utc", "sequential"
+Discrete: "ordinal", "band", "point"
+Discretizing: "quantile", "quantize", "threshold", "bin-linear",
+              "bin-ordinal"}
 
 \item{domain}{The domain of the scale, representing the set of data values.
 For ordinal scales, a character vector; for quantitative scales, a numeric
@@ -58,7 +61,7 @@ left \code{NULL}, then it will be treated as \code{TRUE} whenever
 }
 \description{
 A scale object is a close mapping to a vega mark object. Vega scales
-are documented in \url{https://github.com/trifacta/vega/wiki/Scales}.
+are documented in \url{https://vega.github.io/vega/docs/scales/}.
 }
 \details{
 This function is designed to be used by authors of new types of scale.
@@ -77,4 +80,3 @@ ggvis_scale("x", "ord")
 \url{https://github.com/trifacta/vega/wiki/Scales}
 }
 \keyword{internal}
-

@@ -68,6 +68,12 @@ as.vega.ggvis <- function(x, session = NULL, dynamic = FALSE, ...) {
     axes = compact(lapply(x$axes, as.vega)),
     padding = as.vega(x$options$padding),
     ggvis_opts = x$options,
+    # begin - added by gabe 170922
+    width = ifelse("width" %in% x$options, x$options$width, 600),
+    height = ifelse("height" %in% x$options, x$options$height, 400),
+    padding = ifelse("padding" %in% x$options, x$options$padding, 5),
+    "$schema" = "https://vega.github.io/schema/vega/v3.0.json",
+    # end
     handlers = if (dynamic) x$handlers
   )
 
@@ -91,7 +97,8 @@ as.vega.mark_group <- function(x, ...) {
 
   list(
     type = "group",
-    properties = as.vega(x$props),
+    # properties = as.vega(x$props),
+    encode = as.vega(x$props),
     from = list(data = data_id(x$data)),
     marks = lapply(x$marks, as.vega, in_group = TRUE),
     scales = lapply(unname(x$scales), as.vega),
@@ -129,7 +136,8 @@ as.vega.mark <- function(mark, in_group = FALSE) {
       marks = list(
         list(
           type = mark$type,
-          properties = properties
+          # properties = properties
+          encode = properties
         )
       )
     )
@@ -137,7 +145,8 @@ as.vega.mark <- function(mark, in_group = FALSE) {
   } else {
     m <- list(
       type = mark$type,
-      properties = properties
+      # properties = properties
+      encode = properties
     )
     if (!in_group) {
       # If mark inside group, inherits data from parent.
@@ -146,7 +155,8 @@ as.vega.mark <- function(mark, in_group = FALSE) {
   }
 
   if (!is.null(key)) {
-    m$key <- paste0("data.", safe_vega_var(prop_label(key)))
+    # m$key <- paste0("data.", safe_vega_var(prop_label(key)))
+    m$key <- safe_vega_var(prop_label(key))
   }
   m
 }
@@ -172,10 +182,15 @@ as.vega.ggvis_props <- function(x, default_scales = NULL) {
 as.vega.ggvis_axis <- function(x) {
   if (isTRUE(x$hide)) return(NULL)
 
-  if (empty(x$properties)) {
-    x$properties <- NULL
+  # if (empty(x$properties)) {
+  #   x$properties <- NULL
+  # } else {
+  #   x$properties <- as.vega(x$properties)
+  # }
+  if (empty(x$encode)) {
+    x$encode <- NULL
   } else {
-    x$properties <- as.vega(x$properties)
+    x$encode <- as.vega(x$encode)
   }
 
   unclass(x)
@@ -210,7 +225,8 @@ as.vega.grouped_df <- function(x, name, ...) {
     source = paste0(name, "_flat"),
     transform = list(list(
       type = "treefacet",
-      keys = as.list(paste0("data.", safe_vega_var(group_vars)))
+      # keys = as.list(paste0("data.", safe_vega_var(group_vars)))
+      keys = as.list(safe_vega_var(group_vars))
     ))
   )
 

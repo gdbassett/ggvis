@@ -79,7 +79,7 @@ layer_bars <- function(vis, ..., stack = TRUE, width = NULL) {
   check_unsupported_props(new_props, c("x", "y", "x2", "y2"),
                           c("enter", "exit", "hover"), "layer_bars")
 
-  x_var <- find_prop_var(new_props, "x.update")
+  x_var <- find_prop_var(new_props, "x.update") # get the data variable associated with the x axis
   discrete_x <- prop_countable(cur_data(vis), new_props$x.update)
 
   vis <- set_scale_label(vis, "x", prop_label(cur_props(vis)$x.update))
@@ -102,9 +102,9 @@ layer_bars <- function(vis, ..., stack = TRUE, width = NULL) {
     }
 
     vis <- layer_f(vis, function(v) {
-      v <- add_props(v, .props = new_props)
-      v <- auto_group(v, exclude = c("x", "y"))
-      v <- compute_count(v, x_var, y_var)
+      v <- add_props(v, .props = new_props) # Join the new properties to the existing properties
+      v <- auto_group(v, exclude = c("x", "y")) # basically run dplyr::group_by_ on all of the continuous variables except x and y for stacked bar charts
+      v <- compute_count(v, x_var, y_var) # summarize x and y by groups from previous line
 
       if (stack) {
         v <- compute_stack(v, stack_var = ~count_, group_var = ~x_)
@@ -115,7 +115,7 @@ layer_bars <- function(vis, ..., stack = TRUE, width = NULL) {
       }
       v
     })
-    vis <- scale_nominal(vis, "x", padding = 1 - width, points = FALSE)
+    vis <- scale_nominal(vis, "x", padding = 1 - width, points = FALSE) # pass-through to ggvis_scale that sets an ordinal scale with a 'nominal' subclass. ('nominal' is set in the 'class' so might be used for specific nominal functions)
 
   } else {
     vis <- layer_f(vis, function(v) {
