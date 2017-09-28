@@ -1,5 +1,15 @@
 # ggvis 0.4.3.9XXX
 
+* 9005: couldn't get existing figure rendering to work so wrote a separate htmlwidget to render the vega view.
+* TODO: Padding option is wrong for vega 3
+* TODO: autoresize option is missing for vega 3
+
+* 9004: basic working flip().  NOTE: getting vega errors after javascript update so figures not displaying in rstudio.
+
+* 9003: updated vega.js and vega.min.js to 3.0.2
+
+* 9002: added additional scales to ggvis_scale() and changed scale_nominal form 'ordinal' to 'band'
+
 * Beginning of changes from gabriel bassett
 
 * added dump_spec() function modeled on save_spec to allow exporting vega schema json
@@ -10,12 +20,7 @@
   to dump out the actual spec.  Also, I didn't bother creating a parameter to specify the
   version so it's always going to use 'encode'.  (Note, this mean as of 0.4.3.9001, the 
   spec is not valid as either version 2 or 3.  I'll work to fix that.)
-  
-* 9002: added additional scales to ggvis_scale() and changed scale_nominal form 'ordinal' to 'band'
 
-* 9003: updated vega.js and vega.min.js to 3.0.2
-
-* 9004: basic working flip().  NOTE: getting vega errors after javascript update so figures not displaying in rstudio.
 
 # ggvis 0.4.3
 

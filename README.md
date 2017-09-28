@@ -1,6 +1,6 @@
 # ggvis
 
-[![Build Status](https://travis-ci.org/rstudio/ggvis.png?branch=master)](https://travis-ci.org/rstudio/ggvis)
+[![Build Status](https://travis-ci.org/gdbassett/ggvis.png?branch=master)](https://travis-ci.org/rstudio/ggvis)
 
 The goal of ggvis is to make it easy to describe interactive web graphics in
 R. It combines:
@@ -11,10 +11,14 @@ R. It combines:
 
 * data transformation pipelines from [dplyr](http://github.com/hadley/dplyr).
 
-ggvis graphics are rendered with [vega](https://github.com/trifacta/vega), so you can generate both raster graphics with [HTML5 canvas](http://diveintohtml5.info/canvas.html) and vector graphics with
+ggvis graphics are rendered with [vega](https://github.com/vega/vega), so you can generate both raster graphics with [HTML5 canvas](http://diveintohtml5.info/canvas.html) and vector graphics with
 [svg](http://en.wikipedia.org/wiki/Scalable_Vector_Graphics). ggvis is less flexible than raw [d3](http://d3js.org/) or vega, but is much more succinct and is tailored to the needs of exploratory data analysis.
 
 If you find a bug, please file a minimal reproducible example at http://github.com/rstudio/ggvis/issues. If you're not sure if something is a bug, you'd like to discuss new features or have any other questions about ggvis, please join us on the mailing list: https://groups.google.com/group/ggvis.
+
+## Status
+
+The rstudio ggvis is built on VEGA v1.4.3.  Vega is currently at 3.0.2.  I am currently working to make ggvis produce valid vega 3.0.2 schemas, however am focusing specifically on the things I need and so am not testing across all feature changes in [Upgrading VEGA 1 to 2](https://github.com/vega/vega/wiki/Upgrading-to-2.0) or [Upgrading Vega 2 to 3](https://vega.github.io/vega/docs/porting-guide/)
 
 ## Installation 
 

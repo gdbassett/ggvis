@@ -1,7 +1,7 @@
 /*jshint forin:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true,
     strict:false, undef:true, unused:true, browser:true, jquery:true, maxerr:50,
     curly:false, multistr:true */
-/*global vg, ggvis:true, lodash*/
+/*global vega, ggvis:true, lodash*/
 
 ggvis = (function(_) {
   var ggvis = {
@@ -158,7 +158,8 @@ ggvis = (function(_) {
       // Merge options passed to this function into options from the spec
       self.opts = $.extend(true, self.spec.ggvis_opts, opts);
 
-      vg.parse.spec(spec, function(chart) {
+      //vg.parse.spec(spec, function(chart) {
+      vega.parse(spec, function(chart) {
         var opts = self.opts;
 
         // If hover_duration is supplied, use that later in a custom callback,
@@ -603,7 +604,8 @@ ggvis = (function(_) {
         this.plot = plot;
 
         this._enabled = false;
-        this._brushBounds = new vg.Bounds();
+        //this._brushBounds = new vg.Bounds();
+        this._brushBounds = new vega.Bounds();
         this._clickPoint = null;      // Coordinates where mouse was clicked
         this._lastPoint = null;       // Previous mouse coordinate
         this._lastMatchingItems = [];
@@ -885,7 +887,7 @@ ggvis = (function(_) {
 })(lodash);
 
 // This is like facet, but includes the key values in a  at each level.
-vg.data.treefacet = function() {
+vega.transforms.treefacet = function() {
 
   var keys = [], key_funs = [];
 
@@ -923,7 +925,8 @@ vg.data.treefacet = function() {
         };
         // Keys look like data.xyz, this adds into a data element
         // so you can refer to like usual.
-        for (var key in keys) obj.data[vg.field(keys[key])[1]] = klist[key];
+        //for (var key in keys) obj.data[vg.field(keys[key])[1]] = klist[key];
+        for (var key in keys) obj.data[vega.field(keys[key])[1]] = klist[key];
         vals.push(obj);
       }
       obj.values.push(data[i]);
@@ -934,7 +937,8 @@ vg.data.treefacet = function() {
 
   treefacet.keys = function(k) {
     keys = k;
-    key_funs = vg.array(k).map(vg.accessor);
+    //key_funs = vg.array(k).map(vg.accessor);
+    key_funs = vega.array(k).map(vega.accessor);
     return treefacet;
   };
 

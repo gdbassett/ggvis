@@ -71,8 +71,9 @@ as.vega.ggvis <- function(x, session = NULL, dynamic = FALSE, ...) {
     # begin - added by gabe 170922
     width = ifelse("width" %in% x$options, x$options$width, 600),
     height = ifelse("height" %in% x$options, x$options$height, 400),
-    padding = ifelse("padding" %in% x$options, x$options$padding, 5),
+    # padding = ifelse("padding" %in% x$options, x$options$padding, 5),
     "$schema" = "https://vega.github.io/schema/vega/v3.0.json",
+    autosize = list(type="fit", "resize"=ifelse("resize" %in% x$options, x$options$resize, TRUE)),
     # end
     handlers = if (dynamic) x$handlers
   )

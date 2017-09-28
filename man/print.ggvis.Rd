@@ -6,7 +6,8 @@
 \alias{view_dynamic}
 \title{View in a ggvis plot in the browser.}
 \usage{
-\method{print}{ggvis}(x, dynamic = NA, launch = interactive(), ...)
+\method{print}{ggvis}(x, dynamic = NA, launch = interactive(),
+  vega_render = TRUE, ...)
 
 view_static(x, plot_id = rand_id("plot_"), dest = NULL)
 

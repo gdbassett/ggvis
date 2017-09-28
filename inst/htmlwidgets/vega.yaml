@@ -1,0 +1,6 @@
+dependencies:
+  - name: vega
+    version: 3.0.2
+    src: htmlwidgets/lib/vega-3.0.2
+    script:
+      - vega.min.js

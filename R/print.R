@@ -44,19 +44,40 @@
 #' @keywords internal
 #' @method print ggvis
 #' @export
-print.ggvis <- function(x, dynamic = NA, launch = interactive(), ...) {
+print.ggvis <- function(x, dynamic = NA, launch = interactive(), vega_render=TRUE, ...) {
+
   if (is.na(dynamic)) {
     dynamic <- is.dynamic(x) && interactive()
   }
 
-  if (dynamic) {
-    out <- view_dynamic(x, ...)
+  # added vega_render as I don't understand ggvis.js and it's alternative object to the vega object. - gdb 170922
+  if (vega_render) {
+    out <- vega_render(x)
   } else {
-    out <- view_static(x, ...)
+    if (dynamic) {
+      out <- view_dynamic(x, ...)
+    } else {
+      out <- view_static(x, ...)
+    }
   }
 
   if (launch) print(out)
   out
+}
+
+#' Render using plot using htmltools and vega standard process
+#' @export
+#' @param vis ggvis object
+#' @param renderer "svg" (default) or "canvas"
+#' @return printable object
+vega_render <- function(vis, renderer="svg") {
+  spec = dump_spec(vis)
+
+  htmlwidgets::createWidget(
+    name = 'vega',
+    x = list(spec=spec, renderer=renderer),
+    package="ggvis"
+  )
 }
 
 #' @rdname print.ggvis
