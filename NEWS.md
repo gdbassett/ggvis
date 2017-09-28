@@ -1,5 +1,8 @@
 # ggvis 0.4.3.9XXX
 
+* 9006: Added buggy add_title() function that adds an x axis to use as a title.
+* TODO: replace with something better.  The axis tends to over-ride the x axis if it hasn't already been defined.
+
 * 9005: couldn't get existing figure rendering to work so wrote a separate htmlwidget to render the vega view.
 * TODO: Padding option is wrong for vega 3
 * TODO: autoresize option is missing for vega 3
