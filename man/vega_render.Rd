@@ -4,16 +4,48 @@
 \alias{vega_render}
 \title{Render using plot using htmltools and vega standard process}
 \usage{
-vega_render(vis, renderer = "svg")
+vega_render(spec, renderer = "svg", logLevel = "None",
+  tooltip_opts = list())
 }
 \arguments{
-\item{vis}{ggvis object}
+\item{spec}{a vega spec json string}
 
 \item{renderer}{"svg" (default) or "canvas"}
+
+\item{logLevel}{"None" (default), "Warn", "Info", "Debug"}
+
+\item{tooltip_opts}{A list of options to the tooltip function. Details
+can be found at https://github.com/vega/vega-tooltip/blob/master/docs/APIs.md}
 }
 \value{
 printable object
 }
 \description{
 Render using plot using htmltools and vega standard process
+}
+\examples{
+p <- mtcars \%>\%
+  dplyr::group_by(cyl) \%>\%
+  dplyr::summarize(mpg = median(mpg)) \%>\%
+  dplyr::mutate(cyl = as.factor(cyl)) \%>\%
+  ggvis::ggvis(x=~cyl, y=~mpg) \%>\%
+  ggvis::layer_bars(fill:="steelblue") \%>\%
+  ggvis::add_title(text="MPG by Cylinder", orient="top", anchor="start") \%>\%
+  ggvis::flip()
+tooltips_opts <- list(
+  showAllFields=FALSE,
+  fields=list(
+    list(
+      field= "x_",
+      title= "Cylinder",
+      formatType= "string"
+    ),
+    list(
+      field= "stack_upr_",
+      title= "MPG",
+      formatType= "number"
+    )
+  )
+)
+vega_render(dump_spec(p), tooltip_opts = tooltips_opts)
 }

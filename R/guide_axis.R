@@ -195,36 +195,36 @@ format.ggvis_axis <- function(x, ...) {
 #' @export
 print.ggvis_axis <- function(x, ...) cat(format(x, ...), "\n", sep = "")
 
-#' Add a title as an axis
-#'
-#' Based on
-#' https://stackoverflow.com/questions/25018598/add-a-plot-title-to-ggvis
-#'
-#' BUG: If no x axis exists, this will replace the xaxis
-#'
-#' @param vis a ggvis plot
-#' @param title the title to apply
-#' @param ... parameters to be passed to the axis
-#' @return a ggvis plot
-#' @examples
-#' mtcars %>%
-#'   dplyr::group_by(cyl) %>%
-#'   dplyr::summarize(mpg = median(mpg)) %>%
-#'   dplyr::mutate(cyl = as.factor(cyl)) %>%
-#'   ggvis::ggvis(x=~cyl, y=~mpg) %>%
-#'   ggvis::layer_bars() %>%
-#'   ggvis::add_title(title="MPG by Cylinder")
-#' @export
-add_title <- function(vis, ..., title = "Plot Title")
-{
-  # x_axis_exists <- sum(unlist(lapply(vis$axes, function(axis) { axis$type == "x"}))) > 0
-  # if (!x_axis_exists) {
-  #   vis <- add_missing_axes(vis)
-  # }
-  vis %>%
-    ggvis::add_axis("x", orient = "top", ticks = 0, title = title, # type=x, not because it's necessary, but because guide_axis fails if it is not 'x' or 'y'.
-                    properties = ggvis::axis_props(
-                      axis = list(stroke = "white"),
-                      labels = list(fontSize = 0)
-                    ), ...)
-}
+# #' Add a title as an axis
+# #'
+# #' Based on
+# #' https://stackoverflow.com/questions/25018598/add-a-plot-title-to-ggvis
+# #'
+# #' BUG: If no x axis exists, this will replace the xaxis
+# #'
+# #' @param vis a ggvis plot
+# #' @param title the title to apply
+# #' @param ... parameters to be passed to the axis
+# #' @return a ggvis plot
+# #' @examples
+# #' mtcars %>%
+# #'   dplyr::group_by(cyl) %>%
+# #'   dplyr::summarize(mpg = median(mpg)) %>%
+# #'   dplyr::mutate(cyl = as.factor(cyl)) %>%
+# #'   ggvis::ggvis(x=~cyl, y=~mpg) %>%
+# #'   ggvis::layer_bars() %>%
+# #'   ggvis::add_title(title="MPG by Cylinder")
+# #' @export
+# add_title <- function(vis, ..., title = "Plot Title")
+# {
+#   # x_axis_exists <- sum(unlist(lapply(vis$axes, function(axis) { axis$type == "x"}))) > 0
+#   # if (!x_axis_exists) {
+#   #   vis <- add_missing_axes(vis)
+#   # }
+#   vis %>%
+#     ggvis::add_axis("x", orient = "top", ticks = 0, title = title, # type=x, not because it's necessary, but because guide_axis fails if it is not 'x' or 'y'.
+#                     properties = ggvis::axis_props(
+#                       axis = list(stroke = "white"),
+#                       labels = list(fontSize = 0)
+#                     ), ...)
+# }

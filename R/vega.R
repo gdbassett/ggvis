@@ -69,14 +69,18 @@ as.vega.ggvis <- function(x, session = NULL, dynamic = FALSE, ...) {
     padding = as.vega(x$options$padding),
     ggvis_opts = x$options,
     # begin - added by gabe 170922
-    width = ifelse("width" %in% x$options, x$options$width, 600),
-    height = ifelse("height" %in% x$options, x$options$height, 400),
+    width = ifelse("width" %in% names(x$options), x$options$width, 600),
+    height = ifelse("height" %in% names(x$options), x$options$height, 400),
     # padding = ifelse("padding" %in% x$options, x$options$padding, 5),
     "$schema" = "https://vega.github.io/schema/vega/v3.0.json",
-    autosize = list(type="fit", "resize"=ifelse("resize" %in% x$options, x$options$resize, TRUE)),
+    autosize = list(type="fit", "resize"=ifelse("resize" %in% names(x$options), x$options$resize, TRUE)),
+
     # end
     handlers = if (dynamic) x$handlers
   )
+
+  if ("title" %in% names(x$options)) spec$title <- x$options$title
+  if ("config" %in% names(x)) spec$config <- x$config
 
   structure(
     spec,

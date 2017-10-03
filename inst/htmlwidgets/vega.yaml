@@ -4,3 +4,10 @@ dependencies:
     src: htmlwidgets/lib/vega-3.0.2
     script:
       - vega.min.js
+  - name: vega-tooltip
+    version: 0.4.4
+    src: htmlwidgets/lib/vega-tooltip-0.4.4
+    script:
+      - vega-tooltip.min.js
+    style:
+      - vega-tooltip.min.css

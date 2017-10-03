@@ -12,19 +12,27 @@ HTMLWidgets.widget({
         spec.width = width;
         spec.height = height;
 
+        var logLevels = {"None": vega.None, "Warn": vega.Warn, "Info": vega.Info, "Debug": vega.Debug};
+
         // console.log(el.id); // DEBUG
         v = new vega.View(vega.parse(spec))
-          .logLevel(vega.Warn) // set view logging level
+          .logLevel(logLevels[x.logLevel]) // set view logging level
           .initialize("#" + el.id)
           .renderer(x.renderer)  // set renderer (canvas or svg)
           .hover()             // enable hover encode set processing
           .run();             // run the dataflow and render the view
+
+        if (Object.keys(x.tooltip_options).length > 0) {
+          vegaTooltip.vega(v, x.tooltip_options);
+        } else {
+          vegaTooltip.vega(v);
+        }
       },
 
       // resize (not necessary as vega auto-resizes when re-rendered)
-      // resize: function(width, height) {
-      //  console.log("resizing to " + width + " by " + height);
-      //},
+      resize: function(width, height) {
+        console.log("resizing to " + width + " by " + height);
+      },
 
       // make vega object available
       vega: v

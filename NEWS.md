@@ -1,4 +1,12 @@
 # ggvis 0.4.3.9XXX
+* 9009: Added tooltips for mouse-over
+
+* 9008: Added add_config() / vega_config() functions to add configs to the vega spec.  The nice thing about this, is you can control
+  many parts of the plot w/o having to mess with the individual parts (marks, axes, etc)
+* TODO: The is.vega_config() function is just a template. It's not 
+
+* 9007: Replaced add_title() with a better form which provides a better example of how to convert  vega references into objects
+* TODO: Add tests for add_title(), vega_title(), and is.vega_title()
 
 * 9006: Added buggy add_title() function that adds an x axis to use as a title.
 * TODO: replace with something better.  The axis tends to over-ride the x axis if it hasn't already been defined.

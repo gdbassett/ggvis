@@ -52,7 +52,7 @@ print.ggvis <- function(x, dynamic = NA, launch = interactive(), vega_render=TRU
 
   # added vega_render as I don't understand ggvis.js and it's alternative object to the vega object. - gdb 170922
   if (vega_render) {
-    out <- vega_render(x)
+    out <- vega_render(dump_spec(x))
   } else {
     if (dynamic) {
       out <- view_dynamic(x, ...)
@@ -67,15 +67,50 @@ print.ggvis <- function(x, dynamic = NA, launch = interactive(), vega_render=TRU
 
 #' Render using plot using htmltools and vega standard process
 #' @export
-#' @param vis ggvis object
+#' @param spec a vega spec json string
 #' @param renderer "svg" (default) or "canvas"
+#' @param logLevel "None" (default), "Warn", "Info", "Debug"
+#' @param tooltip_opts A list of options to the tooltip function. Details
+#'   can be found at https://github.com/vega/vega-tooltip/blob/master/docs/APIs.md
 #' @return printable object
-vega_render <- function(vis, renderer="svg") {
-  spec = dump_spec(vis)
+#' @examples
+#' p <- mtcars %>%
+#'   dplyr::group_by(cyl) %>%
+#'   dplyr::summarize(mpg = median(mpg)) %>%
+#'   dplyr::mutate(cyl = as.factor(cyl)) %>%
+#'   ggvis::ggvis(x=~cyl, y=~mpg) %>%
+#'   ggvis::layer_bars(fill:="steelblue") %>%
+#'   ggvis::add_title(text="MPG by Cylinder", orient="top", anchor="start") %>%
+#'   ggvis::flip()
+#' tooltips_opts <- list(
+#'   showAllFields=FALSE,
+#'   fields=list(
+#'     list(
+#'       field= "x_",
+#'       title= "Cylinder",
+#'       formatType= "string"
+#'     ),
+#'     list(
+#'       field= "stack_upr_",
+#'       title= "MPG",
+#'       formatType= "number"
+#'     )
+#'   )
+#' )
+#' vega_render(dump_spec(p), tooltip_opts = tooltips_opts)
+vega_render <- function(spec,
+                        renderer="svg",
+                        logLevel="None",
+                        # background=NULL,
+                        # height=NULL,
+                        # width=NULL,
+                        # padding=NULL,
+                        tooltip_opts = list()
+                        ) {
 
   htmlwidgets::createWidget(
     name = 'vega',
-    x = list(spec=spec, renderer=renderer),
+    x = list(spec=spec, renderer=renderer, logLevel=logLevel, tooltip_options=tooltip_opts),
     package="ggvis"
   )
 }
