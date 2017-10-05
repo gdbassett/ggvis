@@ -1,4 +1,9 @@
 # ggvis 0.4.3.9XXX
+* 9010: INCOMPLETE.  Started vis$vega object to store the static vega object.  
+* Added ability to add 'data'
+* Added vega_mark() and add_mark_() functions
+* heavy work on layer_bar2() to create a more standard vega object that doesn't overwrite the data.
+
 * 9009: Added tooltips for mouse-over
 
 * 9008: Added add_config() / vega_config() functions to add configs to the vega spec.  The nice thing about this, is you can control

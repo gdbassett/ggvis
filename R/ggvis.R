@@ -50,7 +50,8 @@ ggvis <- function(data = NULL, ..., env = parent.frame()) {
       options = list(),
       cur_data = NULL,
       cur_props = NULL,
-      cur_vis = NULL
+      cur_vis = NULL,
+      vega = list() # added by gabe - gdb 171004
     ),
     class = "ggvis"
   )
@@ -103,6 +104,17 @@ add_props <- function(vis, ..., .props = NULL, inherit = NULL,
 add_data <- function(vis, data, name = deparse2(substitute(data)),
                      add_suffix = TRUE) {
   if (is.null(data)) return(vis)
+
+  # Add static data as well. (Duplicative. Using to transition from reactive shiny data.) - GDB 171004
+  if (!'data' %in% names(vis$vega)) vis$vega[["data"]] <- list()
+  if (shiny::is.reactive(data)) {
+    vis$vega$data[[length(vis$vega$data) + 1]] <- as.vega(shiny::isolate(data()), name=name)[[1]]
+  } else {
+    vis$vega$data[[length(vis$vega$data) + 1]] <- as.vega(data, name=name)[[1]]
+  }
+  static_names <- unlist(lapply(vis$vega$data, function(d) {d$name}))
+  if (length(static_names) > length(unique(static_names))) warning("Static names contains duplicate names. This will cause a VEGA error.")
+  rm(static_names)
 
   # Make sure data is reactive
   if (!shiny::is.reactive(data)) {
