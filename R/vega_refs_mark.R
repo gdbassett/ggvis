@@ -1,0 +1,107 @@
+#' Add a static vega mark
+#'
+#' https://vega.github.io/vega/docs/marks/
+#'
+#' Graphical **marks** visually encode data using geometric primitives such as
+#'   rectangles, lines, and plotting symbols. Marks are the basic visual building block
+#'   of a visualization, providing basic shapes whose properties can be set according to
+#'   backing data. Mark property definitions may be simple constants or data fields, or
+#'   [scales](../scales) can be used to map data values to visual values.
+#'
+#' @section Mark Types:
+#'
+#' The supported mark types are:
+#'
+#' * arc - Circular arcs, including pie and donut slices.
+#' * area - Filled areas with horizontal or vertical alignment.
+#' * image - Images, including icons or photographs.
+#' * group - Containers for other marks, useful for sub-plots.
+#' * line - Stroked lines, often used for showing change over time.
+#' * path - Arbitrary paths or polygons, defined using SVG path syntax.
+#' * rect - Rectangles, as in bar charts and timelines.
+#' * rule - Rules are line segments, often used for axis ticks and grid lines.
+#' * shape - A special variant of path marks for faster drawing of cartographic maps.
+#' * symbol - Plotting symbols, including circles, squares and other shapes.
+#' * text - Text labels with configurable fonts, alignment and angle.
+#' * trail - Lines that can change size based on underlying data.
+#'
+#' @section Group Marks:
+#'
+#' There is also a special group mark type (`group`) that can contain other marks,
+#'   as well as local data, signal, scale, axis and legend definitions. Groups can
+#'   be used to create visualizations consisting of grouped or repeated elements;
+#'   examples include stacked graphs (each stack is a separate group containing a
+#'   series of data values) and small multiples displays (each plot is contained in
+#'   its own group). See the [Group Marks](../marks/group) page for more.
+#'
+#' @param type String Required. The graphical mark type. Must be one of the supported
+#'   mark types.
+#' @param clip Boolean Indicates if the marks should be clipped to the enclosing group’s
+#'   width and height (default false).
+#' @param description String An optional description of this mark. Can be used as a
+#'   comment.
+#' @param encode Encode An object containing a set of visual encoding rules for mark
+#'   properties.
+#' @param from From An object describing the data this mark set should visualize. If
+#'   undefined, a single element data set containing an empty object is assumed. The from
+#'   property can either specify a data set to use (e.g., {"data": "table"}) or provide a
+#'   faceting directive to subdivide a data set across a set of group marks.
+#' @param interactive Boolean A boolean flag (default true) indicating if the marks can
+#'   serve as input event sources. If false, no mouse or touch events corresponding to
+#'   the marks will be generated.
+#' @param key Field A data field to use as a unique key for data binding. When a
+#'   visualization’s data is updated, the key value will be used to match data elements
+#'   to existing mark instances. Use a key field to enable object constancy for
+#'   transitions over dynamic data.
+#' @param name String A unique name for the mark. This name can be used to refer to these
+#'   marks within an event stream definition. SVG renderers will add this name value as a
+#'   CSS class name on the enclosing SVG group (g) element containing the mark instances.
+#' @param on Trigger[] A set of triggers for modifying mark properties in response to
+#'   signal changes.
+#' @param sort Compare A comparator for sorting mark items. The sort order will determine
+#'   the default rendering order. The comparator is defined over generated scenegraph
+#'   items and sorting is performed after encodings are computed, allowing items to be
+#'   sorted by size or position. To sort by underlying data properties in addition to
+#'   mark item properties, append the prefix datum. to a field name
+#'   (e.g., {"field": "datum.field"}).
+#' @param transform Transform[] A set of post-encoding transforms, applied after any
+#'   encode blocks, that operate directly on mark scenegraph items (not backing data
+#'   objects). These can be useful for performing layout with transforms that can set x,
+#'   y, width, height, etc. properties. Only data transforms that do not generate or
+#'   filter data objects may be used.
+#' @param role String A metadata string indicating the role of the mark. SVG renderers
+#'   will add this role value (prepended with the prefix role-) as a CSS class name on
+#'   the enclosing SVG group (g) element containing the mark instances. Roles are used
+#'   internally by Vega to guide layout. Do not set this property unless you know which
+#'   layout effect you are trying to achieve.
+#' @param style String String[] A string or array of strings indicating the name of
+#'   custom styles to apply to the mark. A style is a named collection of mark property
+#'   defaults defined within the configuration. These properties will be applied to the
+#'   mark’s enter encoding set, with later styles overriding earlier styles. Any
+#'   properties explicitly defined within the mark’s encode block will override a style
+#'   default.
+#' @export
+vega_mark <- function(
+  type,
+  clip=FALSE,
+  description=NULL,
+  encode=NULL,
+  from=NULL,
+  interactive=TRUE,
+  key=NULL,
+  name=rand_id(),
+  on=NULL,
+  sort=NULL,
+  transform=NULL,
+  role=NULL,
+  style=NULL
+) {
+  args <- list(type=type, clip=clip, description=description, encode=encode, from=from,
+               interactive=interactive, key=key, name=name, on=on, sort=sort,
+               transform=transform, role=role, style=style)
+  args <- args[!unlist(lapply(args, is.null))]
+
+  is.vega_mark(args, error=TRUE)
+
+  args
+}

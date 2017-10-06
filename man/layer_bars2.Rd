@@ -4,8 +4,8 @@
 \alias{layer_bars2}
 \title{Display data with bars (a barchart).}
 \usage{
-layer_bars2(vis, ..., data = NULL, stack = TRUE, width = NULL,
-  id = NULL)
+layer_bars2(vis, ..., data = NULL, group = NULL, stack = TRUE,
+  width = NULL, id = NULL)
 }
 \arguments{
 \item{vis}{Visualisation to modify}
@@ -13,6 +13,8 @@ layer_bars2(vis, ..., data = NULL, stack = TRUE, width = NULL,
 \item{...}{Visual properties used to override defaults.}
 
 \item{data}{THe data to use for this figure. May be a dataframe or a name.}
+
+\item{group}{Field or fields to group by for grouped bar chart}
 
 \item{stack}{If there are multiple bars to be drawn at an x location, should
 the bars be stacked? If FALSE, the bars will be overplotted on each other.}

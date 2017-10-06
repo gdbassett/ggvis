@@ -3,7 +3,7 @@ Title: Interactive Grammar of Graphics
 Description: An implementation of an interactive grammar of graphics, taking the
     best parts of 'ggplot2', combining them with the reactive framework of
     'shiny' and drawing web graphics using 'vega'.
-Version: 0.4.3.9010
+Version: 0.4.3.9011
 Authors@R: c(
     person("Winston", "Chang", role = c("aut", "cre"), email = "winston@rstudio.com"),
     person("Hadley", "Wickham", role = "aut", email = "hadley@rstudio.com"),
@@ -30,15 +30,19 @@ Depends:
 Imports:
     assertthat,
     dplyr (>= 0.4.0),
+    here (>= 0.1),
     htmltools (>= 0.2.4),
     htmlwidgets (>= 0.9),
     jsonlite (>= 0.9.11),
+    jsonvalidate (>= 1.0.0),
     lazyeval,
     magrittr,
     methods,
     purrr (>= 0.2.3),
+    readr (>= 1.1.1),
     shiny (>= 0.11.1),
-    rlang (>= 0.1.2)
+    rlang (>= 0.1.2),
+    V8 (>= 1.5)
 Suggests:
     MASS,
     mgcv,

@@ -9,7 +9,7 @@ add_config(vis, ...)
 \arguments{
 \item{vis}{a ggvis object}
 
-\item{...}{vega title properties}
+\item{...}{vega config properties}
 }
 \value{
 a ggvis object

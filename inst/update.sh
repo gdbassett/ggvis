@@ -10,6 +10,7 @@ cd vega
 # curl -O https://raw.github.com/trifacta/vega/master/vega.min.js
 curl -O https://raw.githubusercontent.com/vega/vega/master/docs/vega.js
 curl -O https://raw.githubusercontent.com/vega/vega/master/docs/vega.min.js
+curl -O https://vega.github.io/schema/vega/v3.0.json
 cp vega.min.js ../../../htmlwidgets/lib/vega-3.0.2
 
 cd ../d3

@@ -1,4 +1,15 @@
 # ggvis 0.4.3.9XXX
+* 9011: Added vega_scale(), vega_encode(), and vega_axes().  Enough to make a basic figure.  
+```
+p <- mtcars %>%
+  dplyr::group_by(cyl) %>%
+  dplyr::summarize(mpg = median(mpg)) %>%
+  dplyr::ungroup() %>%
+  ggvis::ggvis(x=~cyl, y=~mpg) %>%
+  ggvis::layer_bars2(stack=TRUE)
+vega <- jsonlite::toJSON(p$vega, auto_unbox = TRUE)
+```
+
 * 9010: INCOMPLETE.  Started vis$vega object to store the static vega object.  
 * Added ability to add 'data'
 * Added vega_mark() and add_mark_() functions

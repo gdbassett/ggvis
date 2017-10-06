@@ -31,6 +31,7 @@
 #' @param width Width of each bar. When x is continuous, this controls the width
 #'   in the same units as x. When x is categorical, this controls the width as a
 #'   proportion of the spacing between items (default is 0.9).
+#' @param group Field or fields to group by for grouped bar chart
 #' @param stack If there are multiple bars to be drawn at an x location, should
 #'   the bars be stacked? If FALSE, the bars will be overplotted on each other.
 #' @param id A string to append to names created within this layer, (for example
@@ -75,7 +76,7 @@
 #' # If grouping var is categorical, grouping is done automatically
 #' cocaine %>% ggvis(x = ~state, fill = ~as.factor(month)) %>%
 #'   layer_bars()
-layer_bars2 <- function(vis, ..., data=NULL, stack = TRUE, width = NULL, id=NULL) {
+layer_bars2 <- function(vis, ..., data=NULL, group=NULL, stack = TRUE, width = NULL, id=NULL) {
   new_props <- merge_props(cur_props(vis), props(...)) # turn input into props (so ~x > x.update, etc) and merge with existing props
 
   # added so that items generated in layer can be uniquely identified in schema object. - gdb 171005
@@ -132,46 +133,51 @@ layer_bars2 <- function(vis, ..., data=NULL, stack = TRUE, width = NULL, id=NULL
       width <- 0.9
     }
 
+    if (stack || !is.null(group)) {
+      # TODO: If a grouping variable exists, need to add a transform. use 'stacked'.  ~group should be an enquoted param from ...
+      # transform <- list(
+      #   type = "stack",
+      #   groupby = group,
+      #   field = y_var,
+      #   sort = list(field = x_var, order="descending"),
+      #   as = c(paste(y_var, "0_", id), paste(y_var, "1_", id))
+      # )
+      # Old layer rects replaced by add_mark_
+      # v <- layer_rects(v,
+      #                  x = y_var, width = band(),
+      #                  y = 0, y2 = stats::formula(paste0("~", paste(y_var, "1_", id))))
+      e <- vega_encode(update = list(
+        y = list(scale="y", value=0), y2 = list(scale="y", field=as.character(y_var)[2]),
+        x = list(scale="x", field=as.character(x_var)[2]), width = list(scale="x", band=width)
+      ))
+      vis <- add_mark_(vis, type="rect", from = list(data=data_name), encode=e, name=paste0("mark_", id))
+    } else {
+      # creat group mark
+      s <- vega_scale() # TODO
+      e <- vega_encode(update=list(y = list(scale="y", field=group)))
+      g <- vega_mark(type="group", from=list(data=data_name), encode=e, scales=list(s), name=paste0("group_mark_", id))
 
+      # add mark to marks in group mark
+      e <- vega_encode(update=list(
+        y = list(scale="y", value=0), y2 = list(scale="y", field=as.character(y_var)[2]),
+        x = list(scale="x", field=as.character(x_var)[2]), width = list(scale="x", band=width)
+      ))
+      g <- add_group_mark(g, type="rect", from = list(data=data_name), encode = e, name=paste0("mark_", id))
+      # add group mark to visualization
+      vis <- add_mark_(vis, g)
+      # v <- layer_rects(v,
+      #                  x = x_var, width = band(),
+      #                  y = 0, y2 = y_var)
+    }
+    vis <- add_scale_(vis, name="x", type="band", paddingOuter=0, range="width",
+                      domain=list(data=data_name, field=as.character(x_var)[2]),
+                      round=TRUE)
+    vis <- add_axis_(vis, scale="x", orient="bottom", title=as.character(y_var)[2])
 
-    vis <- layer_f(vis, function(v) {
-      # v <- add_props(v, .props = new_props) # Join the new properties to the existing properties
-      # v <- auto_group(v, exclude = c("x", "y")) # basically run dplyr::group_by_ on all of the continuous variables except x and y for stacked bar charts
-      # v <- compute_count(v, x_var, y_var) # summarize x and y by groups from previous line
-
-      if (stack) {
-        # TODO: If a grouping variable exists, need to add a transform. use 'stacked'.  ~group should be an enquoted param from ...
-        transform <- list(
-          type = "stack",
-          groupby = group,
-          field = y_var,
-          sort = list(field = x_var, order="descending"),
-          as = c(paste(y_var, "0_", id), paste(y_var, "1_", id))
-        )
-        # TODO: replace below with add_mark_()
-        v <- layer_rects(v,
-                         x = y_var, width = band(),
-                         y = 0, y2 = stats::formula(paste0("~", paste(y_var, "1_", id))))
-      } else {
-        e <- vega_encode(
-          # TODO - create encode object
-          y = 0, y2 = rlang::UQ(y_var)
-          x = rlang::UQ(x_var), x2 = list(scale=),
-        )
-        v <- add_mark_(
-          v,
-          from = list(data=data_name),
-          encode = e # TODO
-        )
-        # v <- layer_rects(v,
-        #                  x = x_var, width = band(),
-        #                  y = 0, y2 = y_var)
-      }
-      v
-    })
-    vis <- scale_nominal(vis, "x", padding = 1 - width, points = FALSE) # pass-through to ggvis_scale that sets an ordinal scale with a 'nominal' subclass. ('nominal' is set in the 'class' so might be used for specific nominal functions)
+    # vis <- scale_nominal(vis, "x", padding = 1 - width, points = FALSE) # pass-through to ggvis_scale that sets an ordinal scale with a 'nominal' subclass. ('nominal' is set in the 'class' so might be used for specific nominal functions)
 
   } else {
+    #TODO: EVERYTHING BELOW
     vis <- layer_f(vis, function(v) {
       # v <- add_props(v, .props = new_props)
       # v <- compute_count(v, x_var, y_var)
@@ -194,6 +200,11 @@ layer_bars2 <- function(vis, ..., data=NULL, stack = TRUE, width = NULL, id=NULL
     })
   }
 
-  vis <- scale_numeric(vis, "y", domain = c(0, NA), expand = c(0, 0.05))
+  vis <- add_scale_(vis, name="y", type="linear", range="height",
+                    domain=list(data=data_name, field=as.character(y_var)[2]),
+                    round=TRUE)
+  vis <- add_axis_(vis, scale="y", orient="left", title=as.character(y_var)[2])
+  # vis <- scale_numeric(vis, "y", domain = c(0, NA), expand = c(0, 0.05))
+
   vis
 }
