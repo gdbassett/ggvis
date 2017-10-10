@@ -251,3 +251,41 @@ add_projection <- function(vis, ...) {
   vis
 }
 
+
+#' Add a vega transform to a vega vis
+#'
+#' The transform is added to the first data then group mark found matching 'name'.  If none are found, no transform is added.
+#'
+#' @param vis a ggvis object
+#' @param name a data or mark object name
+#' @param ... vega transform properties
+#' @return a ggvis object
+#' @export
+add_transform <- function(vis, name, ...) {
+  transform <- vega_transform(...)
+
+  locs <- c()
+
+  if ("data" %in% names(vis$vega)) {
+    locs <- which(name %in% unlist(purrr::map(vis$vega$data, "name")))
+  }
+  if (length(locs) > 0) {
+    loc <- min(locs)
+    if (!"transform" %in% names(vis$vega$data[[loc]])) vis$vega$data[[loc]]$transform <- list()
+    vis$vega$data[[loc]]$transform[[length(vis$vega$data[[loc]]$transform) + 1]] <- transform
+  } else { # no data match
+    if ("marks" %in% names(vis$vega)) {
+      locs <- which(name %in% unlist(purrr::map(vis$vega$marks, "name")))
+      group_locs <- which("group" %in% unlist(purrr::map(vis$vega$marks, "type")))
+      locs <- intersect(locs, group_locs)
+      loc <- min(locs)
+      if (!"transform" %in% names(vis$vega$marks[[loc]])) vis$vega$marks[[loc]]$transform <- list()
+      vis$vega$marks[[loc]]$transform[[length(vis$vega$marks[[loc]]$transform) + 1]] <- transform
+    }
+  }
+
+  # return
+  vis
+}
+
+

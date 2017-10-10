@@ -1,4 +1,6 @@
 # ggvis 0.4.3.9XXX
+* 9014: added transforms (UNTESTED)
+
 * 9013: added rest of signals/inputs/events functions.  Added projection functions.  Added legend functions. (UNTESTED)
 
 * 9012.1: added initial vega_signals() functions.

@@ -259,6 +259,26 @@ is.vega_projection <- function(obj, error=FALSE) {
 }
 
 
+#' Validate if the object is a vega transform object
+#' @param obj a vega transform object of any type
+#' @param error Throw an error on parse failure? If TRUE, then the function returns NULL
+#'   on success (i.e., call only for the side-effect of an error on failure, like
+#'   stopifnot).
+#' @return logical
+#' @export
+is.vega_transform <- function(obj, error=FALSE) {
+  spec <- jsonlite::toJSON(list(data = list(name="test", transform=list(obj))), auto_unbox = TRUE) # easier to build full object than, subset spec
+  schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
+  err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
+  ret <- !any(grepl("^data[.]transform", err$field)) # judge only transform errors
+  if (error) error_helper(err)  # raise error rather than returning as attr
+  attr(ret, 'errors') <- err[grepl("^data[.]transform", err$field), ] # add errors back in
+
+  ret
+}
+
+
+
 #' parse the errors and raise them if they exist
 #'
 #' from jsonvalidate::json_validator
