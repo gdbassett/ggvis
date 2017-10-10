@@ -6,7 +6,8 @@
 \usage{
 vega_mark(type, clip = FALSE, description = NULL, encode = NULL,
   from = NULL, interactive = TRUE, key = NULL, name = rand_id(),
-  on = NULL, sort = NULL, transform = NULL, role = NULL, style = NULL)
+  on = NULL, sort = NULL, transform = NULL, role = NULL, style = NULL,
+  scales = NULL)
 }
 \arguments{
 \item{type}{String Required. The graphical mark type. Must be one of the supported
@@ -67,6 +68,8 @@ defaults defined within the configuration. These properties will be applied to t
 mark’s enter encoding set, with later styles overriding earlier styles. Any
 properties explicitly defined within the mark’s encode block will override a style
 default.}
+
+\item{scales}{a scales object for group_mark marks}
 }
 \description{
 https://vega.github.io/vega/docs/marks/

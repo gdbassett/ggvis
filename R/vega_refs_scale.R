@@ -2,7 +2,6 @@
 #'
 #' https://vega.github.io/vega/docs/scales/
 #'
-#' @md
 #' ---
 #' layout: spec
 #' title: Scales

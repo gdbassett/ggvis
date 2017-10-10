@@ -101,10 +101,6 @@ print.ggvis <- function(x, dynamic = NA, launch = interactive(), vega_render=TRU
 vega_render <- function(spec,
                         renderer="svg",
                         logLevel="None",
-                        # background=NULL,
-                        # height=NULL,
-                        # width=NULL,
-                        # padding=NULL,
                         tooltip_opts = list()
                         ) {
 

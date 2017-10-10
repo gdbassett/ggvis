@@ -80,6 +80,7 @@
 #'   mark’s enter encoding set, with later styles overriding earlier styles. Any
 #'   properties explicitly defined within the mark’s encode block will override a style
 #'   default.
+#' @param scales a scales object for group_mark marks
 #' @export
 vega_mark <- function(
   type,
@@ -94,11 +95,12 @@ vega_mark <- function(
   sort=NULL,
   transform=NULL,
   role=NULL,
-  style=NULL
+  style=NULL,
+  scales=NULL
 ) {
   args <- list(type=type, clip=clip, description=description, encode=encode, from=from,
                interactive=interactive, key=key, name=name, on=on, sort=sort,
-               transform=transform, role=role, style=style)
+               transform=transform, role=role, style=style, scales=NULL)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_mark(args, error=TRUE)

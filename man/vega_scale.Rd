@@ -16,7 +16,7 @@ vega_scale(name = NULL, type = "linear", align = NULL, base = NULL,
 
 \item{type}{String  The type of scale (default linear). See the scale type reference for more.}
 
-\item{align}{Number  The alignment of elements within each band step, as a fraction of the step size (default 0.5). This value must lie in the range \link{0,1}.}
+\item{align}{Number  The alignment of elements within each band step, as a fraction of the step size (default 0.5). This value must lie in the range [0,1].}
 
 \item{base}{Number  The base of the logarithm (default 10 for log scales).}
 
@@ -40,9 +40,9 @@ vega_scale(name = NULL, type = "linear", align = NULL, base = NULL,
 
 \item{padding}{Number Multiple definitions based on scale type. See scale type documentation.}
 
-\item{paddingInner}{Number  The inner padding (spacing) within each band step, as a fraction of the step size (default 0). This value must lie in the range \link{0,1}.}
+\item{paddingInner}{Number  The inner padding (spacing) within each band step, as a fraction of the step size (default 0). This value must lie in the range [0,1].}
 
-\item{paddingOuter}{Number  The outer padding (spacing) at the ends of the scale range, as a fraction of the step size (default 0). This value must lie in the range \link{0,1}.}
+\item{paddingOuter}{Number  The outer padding (spacing) at the ends of the scale range, as a fraction of the step size (default 0). This value must lie in the range [0,1].}
 
 \item{range}{| Scheme | Color[] Range The range of the scale, representing the set of visual values. For numeric values, the range can take the form of a two-element array with minimum and maximum values. For ordinal or quantized data, the range may be an array of desired output values, which are mapped to elements in the specified domain. See the scale range reference for more.}
 

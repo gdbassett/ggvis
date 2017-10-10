@@ -1,4 +1,8 @@
 # ggvis 0.4.3.9XXX
+* 9012.1: added initial vega_signals() functions.
+
+* 9012: Added vega() (similar to ggvis()), update_vega() (adds features to root of vega spec), and print.vega() to pritn the vega object.
+
 * 9011: Added vega_scale(), vega_encode(), and vega_axes().  Enough to make a basic figure.  
 ```
 p <- mtcars %>%
