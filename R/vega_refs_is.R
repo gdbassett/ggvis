@@ -156,9 +156,85 @@ is.vega_axis <- function(obj, error=FALSE) {
   spec <- jsonlite::toJSON(list(axes = list(obj)), auto_unbox = TRUE) # easier to build full object than, subset spec
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE), 'errors') # get errors
-  ret <- !any(grepl("^axes", err$field)) # judge only mark errors
+  ret <- !any(grepl("^axes", err$field)) # judge only axis errors
   if (error) error_helper(err)  # raise error rather than returning as attr
   attr(ret, 'errors') <- err[grepl("^axes", err$field), ] # add errors back in
+
+  ret
+}
+
+
+#' Validate if the object is a vega signal object
+#' @param obj an signal object
+#' @param error Throw an error on parse failure? If TRUE, then the function returns NULL
+#'   on success (i.e., call only for the side-effect of an error on failure, like
+#'   stopifnot).
+#' @return logical
+#' @export
+is.vega_signal <- function(obj, error=FALSE) {
+  spec <- jsonlite::toJSON(list(signals = list(obj)), auto_unbox = TRUE) # easier to build full object than, subset spec
+  schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
+  err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE), 'errors') # get errors
+  ret <- !any(grepl("^signals", err$field)) # judge only signals errors
+  if (error) error_helper(err)  # raise error rather than returning as attr
+  attr(ret, 'errors') <- err[grepl("^signals", err$field), ] # add errors back in
+
+  ret
+}
+
+
+#' Validate if the object is a vega signal object
+#' @param obj an signal object
+#' @param error Throw an error on parse failure? If TRUE, then the function returns NULL
+#'   on success (i.e., call only for the side-effect of an error on failure, like
+#'   stopifnot).
+#' @return logical
+#' @export
+is.vega_signal <- function(obj, error=FALSE) {
+  spec <- jsonlite::toJSON(list(signals = list(obj)), auto_unbox = TRUE) # easier to build full object than, subset spec
+  schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
+  err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE), 'errors') # get errors
+  ret <- !any(grepl("^signals", err$field)) # judge only signals errors
+  if (error) error_helper(err)  # raise error rather than returning as attr
+  attr(ret, 'errors') <- err[grepl("^signals", err$field), ] # add errors back in
+
+  ret
+}
+
+
+#' Validate if the object is a vega event object
+#' @param obj an event object
+#' @param error Throw an error on parse failure? If TRUE, then the function returns NULL
+#'   on success (i.e., call only for the side-effect of an error on failure, like
+#'   stopifnot).
+#' @return logical
+#' @export
+is.vega_signal <- function(obj, error=FALSE) {
+  spec <- jsonlite::toJSON(list(signals = list(name="test", on=list(obj))), auto_unbox = TRUE) # easier to build full object than, subset spec
+  schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
+  err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE), 'errors') # get errors
+  ret <- !any(grepl("^signals[.]on", err$field)) # judge only event errors
+  if (error) error_helper(err)  # raise error rather than returning as attr
+  attr(ret, 'errors') <- err[grepl("^signals[.]on", err$field), ] # add errors back in
+
+  ret
+}
+
+
+#' Validate if the object is a vega input object
+#' @param obj an input object
+#' @param error Throw an error on parse failure? If TRUE, then the function returns NULL
+#'   on success (i.e., call only for the side-effect of an error on failure, like
+#'   stopifnot).
+#' @return logical
+#' @export
+is.vega_signal <- function(obj, error=FALSE) {
+  spec <- jsonlite::toJSON(list(signals = list(name="test", bind=list(obj))), auto_unbox = TRUE) # easier to build full object than, subset spec
+  schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
+  err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE), 'errors') # get errors
+  ret <- !any(grepl("^signals[.]bind", err$field)) # judge only input errors
+  if (error) error_helper(err)  # raise error rather than returning as attr
+  attr(ret, 'errors') <- err[grepl("^signals[.]bind", err$field), ] # add errors back in
 
   ret
 }

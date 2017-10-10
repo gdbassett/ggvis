@@ -15,7 +15,7 @@
 #' @return a vega signal object
 #' @export
 vega_signal <- function (
-  name,
+  name=NULL,
   bind=NULL,
   description=NULL,
   on=NULL,
@@ -24,6 +24,11 @@ vega_signal <- function (
   react=TRUE,
   value=NULL
 ) {
+  if (is.null(name)) {
+    name <- past0("signal_", rand_id())
+    message(paste0("Signal name is ", name, "."))
+  }
+
   args <- list(name=name, bind=bind, description=description, on=on, push=push,
                update=update, react=react, value=value)
   args <- args[!unlist(lapply(args, is.null))]

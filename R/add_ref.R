@@ -41,7 +41,6 @@ add_mark_ <- function(vis, ...) {
   }
 
   # if there's any overlap in names, replace the mark, otherwise add the mark
-  lapply
   if (length(locs) > 0) {
     vis$vega$marks[locs] <- list(mark)
   } else {
@@ -72,7 +71,6 @@ add_group_mark <- function(group_mark, ...) {
   }
 
   # if there's any overlap in names, replace the mark, otherwise add the mark
-  lapply
   if (length(locs) > 0) {
     group_mark$marks[locs] <- list(mark)
   } else {
@@ -103,7 +101,6 @@ add_scale_ <- function(vis, ...) {
   }
 
   # if there's any overlap in names, replace the scale, otherwise add the scale
-  lapply
   if (length(locs) > 0) {
     vis$vega$scales[locs] <- list(scale)
   } else {
@@ -126,6 +123,77 @@ add_axis_ <- function(vis, ...) {
   if (!"axes" %in% names(vis$vega)) vis$vega$axes <- list()
 
   vis$vega$axes[[length(vis$vega$axes) + 1]] <- axis
+
+  # return
+  vis
+}
+
+#' Add a signal
+#'
+#' @param vis a ggvis object
+#' @param ... vega signal properties
+#' @return a ggvis object
+#' @export
+add_signal_ <- function(vis, ...) {
+  signal <- vega_signal(...)
+
+  if (!"signals" %in% names(vis$vega)) vis$vega$signals <- list()
+
+  # check if named scales exist in both the incoming scale and vis
+  if ("name" %in% names(signal)) {
+    locs <- which(signal$name %in% unlist(purrr::map(vis$vega$signals, "name")))
+  } else {
+    locs <- c()
+  }
+
+  # if there's any overlap in names, replace the scale, otherwise add the scale
+  lapply
+  if (length(locs) > 0) {
+    vis$vega$signals[locs] <- list(signal)
+  } else {
+    vis$vega$signals[[length(vis$vega$signals) + 1]] <- signal
+  }
+
+  # return
+  vis
+}
+
+
+#' Update a signal
+#'
+#' @param vis a ggvis object
+#' @param ... vega signal properties
+#' @return a ggvis object
+#' @export
+update_signal_ <- function(vis, ...) {
+  signal <- vega_signal(...)
+
+  if (!"signals" %in% names(vis$vega)) vis$vega$signals <- list()
+
+  # check if named scales exist in both the incoming scale and vis
+  if ("name" %in% names(signal)) {
+    locs <- which(signal$name %in% unlist(purrr::map(vis$vega$signals, "name")))
+  } else {
+    locs <- c()
+  }
+
+  # if there's any overlap in names, replace the scale, otherwise add the scale
+  if (length(locs) == 0) {
+    vis$vega$signals[[length(vis$vega$signals) + 1]] <- signal
+  } else {
+    lapply(locs, function(loc) {
+      # on & bind are lists of lists, so update them individually
+      lapply(c("on", "bind"), function(prop) {
+        if (prop %in% names(signal)) {
+          if (prop %in% names(vis$vega$signals[[loc]])) {
+            # update the properties in the signal so we can just update the signal later
+            singal[[prop]] <- c(vis$vega$signals[[loc]][[prop]], singal[[prop]])
+          }
+        }
+      })
+      vis$vega$signals[[loc]] <- utils::modifyList(vis$vega$signals[[loc]], signal)
+    })
+  }
 
   # return
   vis
