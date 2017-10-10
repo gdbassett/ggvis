@@ -19,9 +19,11 @@ vega_event(events, update = NULL, encode = NULL, force = FALSE)
 a vega event object
 }
 \description{
-An event handler object includes an event stream definition indicating which events to respond to, and either an update expression for setting a new signal value, or an encode set for updating the mark being interacted with.
+https://vega.github.io/vega/docs/event-streams/
 }
 \details{
+An event handler object includes an event stream definition indicating which events to respond to, and either an update expression for setting a new signal value, or an encode set for updating the mark being interacted with.
+
 This signal definition increments its value upon mouseover of rect items:
 
 {

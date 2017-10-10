@@ -1,5 +1,7 @@
 #' Add a vega signal
 #'
+#' https://vega.github.io/vega/docs/signals/
+#'
 #' Signals are dynamic variables that parameterize a visualization and can drive interactive behaviors. Signals can be used throughout a Vega specification, for example to define a mark property or data transform parameter.
 
 #' Signal values are reactive: they can update in response to input event streams, external API calls, or changes to upstream signals. Event streams capture and sequence input events, such as mousedown or touchmove. When an event occurs, signals with associated event handlers are re-evaluated in their specification order. Updated signal values then propagate to the rest of the specification, and the visualization is re-rendered automatically.
@@ -25,7 +27,7 @@ vega_signal <- function (
   value=NULL
 ) {
   if (is.null(name)) {
-    name <- past0("signal_", rand_id())
+    name <- paste0("signal_", rand_id())
     message(paste0("Signal name is ", name, "."))
   }
 
@@ -39,6 +41,8 @@ vega_signal <- function (
 }
 
 #' return a vega event handler binding
+#'
+#' https://vega.github.io/vega/docs/event-streams/
 #'
 #' An event handler object includes an event stream definition indicating which events to respond to, and either an update expression for setting a new signal value, or an encode set for updating the mark being interacted with.
 #'
@@ -73,7 +77,7 @@ vega_event <- function(
   encode=NULL,
   force=FALSE
 ) {
-  args <- list(input, element, debounce)
+  args <- list(events=events, update=update, encode=encode, force=force)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_event(args, error=TRUE)
@@ -118,7 +122,7 @@ vega_input <- function(
   element=NULL,
   debounce=NULL
 ) {
-  args <- list(input, element, debounce)
+  args <- list(input=input, element=element, debounce=debounce)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_input(args, error=TRUE)

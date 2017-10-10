@@ -128,7 +128,7 @@ add_axis_ <- function(vis, ...) {
   vis
 }
 
-#' Add a signal
+#' Add a vega signal to a vega vis
 #'
 #' @param vis a ggvis object
 #' @param ... vega signal properties
@@ -159,7 +159,9 @@ add_signal_ <- function(vis, ...) {
 }
 
 
-#' Update a signal
+#' Update a vega signal in a vega vis
+#'
+#' if the signal name isn't found int he vis, it is added
 #'
 #' @param vis a ggvis object
 #' @param ... vega signal properties
@@ -198,3 +200,54 @@ update_signal_ <- function(vis, ...) {
   # return
   vis
 }
+
+#' Add a vega legend to a vega vis
+#'
+#' Note: legend is simply appended without trying to identify other legends for the scale the legend applies to
+#'
+#' @param vis a ggvis object
+#' @param ... vega legend properties
+#' @return a ggvis object
+#' @export
+add_legend_ <- function(vis, ...) {
+  legend <- vega_legend(...)
+
+  if (!"legends" %in% names(vis$vega)) vis$vega$legends <- list()
+
+  vis$vega$legends[[length(vis$vega$legends) + 1]] <- legend
+
+  # return
+  vis
+}
+
+
+#' Add a vega projection to a vega vis
+#'
+#' @param vis a ggvis object
+#' @param ... vega projection properties
+#' @return a ggvis object
+#' @export
+add_projection <- function(vis, ...) {
+  projection <- vega_projection(...)
+
+  #
+  if (!"projections" %in% names(vis$vega)) vis$vega$projections <- list()
+
+  # check if named projections exist in both the incoming projection and vis
+  if ("name" %in% names(projection)) {
+    locs <- which(projection$name %in% unlist(purrr::map(vis$vega$projections, "name")))
+  } else {
+    locs <- c()
+  }
+
+  # if there's any overlap in names, replace the projection, otherwise add the projection
+  if (length(locs) > 0) {
+    vis$vega$projections[locs] <- list(projection)
+  } else {
+    vis$vega$projections[[length(vis$vega$projection) + 1]] <- projection
+  }
+
+  # return
+  vis
+}
+

@@ -4,7 +4,7 @@
 \alias{vega_signal}
 \title{Add a vega signal}
 \usage{
-vega_signal(name, bind = NULL, description = NULL, on = NULL,
+vega_signal(name = NULL, bind = NULL, description = NULL, on = NULL,
   push = NULL, update = NULL, react = TRUE, value = NULL)
 }
 \arguments{
@@ -28,6 +28,9 @@ vega_signal(name, bind = NULL, description = NULL, on = NULL,
 a vega signal object
 }
 \description{
+https://vega.github.io/vega/docs/signals/
+}
+\details{
 Signals are dynamic variables that parameterize a visualization and can drive interactive behaviors. Signals can be used throughout a Vega specification, for example to define a mark property or data transform parameter.
 Signal values are reactive: they can update in response to input event streams, external API calls, or changes to upstream signals. Event streams capture and sequence input events, such as mousedown or touchmove. When an event occurs, signals with associated event handlers are re-evaluated in their specification order. Updated signal values then propagate to the rest of the specification, and the visualization is re-rendered automatically.
 }
