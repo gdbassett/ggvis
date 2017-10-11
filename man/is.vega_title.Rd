@@ -4,10 +4,14 @@
 \alias{is.vega_title}
 \title{Validate if the object is a vega title object}
 \usage{
-is.vega_title(obj)
+is.vega_title(obj, error = FALSE)
 }
 \arguments{
 \item{obj}{an object}
+
+\item{error}{Throw an error on parse failure? If TRUE, then the function returns NULL
+on success (i.e., call only for the side-effect of an error on failure, like
+stopifnot).}
 }
 \value{
 logical

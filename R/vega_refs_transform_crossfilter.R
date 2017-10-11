@@ -6,16 +6,16 @@
 #' 
 #'
 #' @param type All transforms require a type property, specifying the name of the transform.
-#' @param fields Field[] {% include required %} An array of data fields to filter. The same field may be included more than once to specify multiple queries.
-#' @param queries Array[] {% include required %} An array of per-field range queries. Each entry must resolve to a two-element number array, indicating the minimum (inclusive) and maximum (exclusive) values that should pass through the filter.
+#' @param fields Field[] (required) An array of data fields to filter. The same field may be included more than once to specify multiple queries.
+#' @param queries Array[] (required) An array of per-field range queries. Each entry must resolve to a two-element number array, indicating the minimum (inclusive) and maximum (exclusive) values that should pass through the filter.
 #' @param signal String If defined, binds the computed filter mask to a signal with the given name.
-#' @return a {0} transform object
+#' @return a transform object
 #' @export
 vega_crossfilter_transform <- function(
   type,
   fields=NULL,
   queries=NULL,
-  signal=NULL,
+  signal=NULL
 ) {
   args <- list(fields=fields, queries=queries, signal=signal)
   args <- args[!unlist(lapply(args, is.null))]

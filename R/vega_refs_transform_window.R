@@ -4,12 +4,6 @@
 #' 
 #' The **window** transform performs calculations over sorted groups of data objects. These calculations including ranking, lead/lag analysis, and aggregates such as running sums and averages. Calculated values are written back to the input data stream.
 #' 
-#' ## Example
-#' 
-#' {% include embed spec="window" %}
-#' 
-#' Explore the effects of using different frames and windowed aggregation functions.
-#' 
 #'
 #' @param type All transforms require a type property, specifying the name of the transform.
 #' @param sort Compare A comparator definition for sorting data objects within a window. If two data objects are considered equal by the comparator, they are considered "peer" values of equal rank. If _sort_ is not specified, the order is undefined: data objects are processed in the order they are observed and none are considered peers (the _ignorePeers_ parameter is ignored and treated as if set to `true`).
@@ -20,7 +14,7 @@
 #' @param as String[] The output field names to use for each operation in _ops_. If not specified, names will be automatically generated based on the operation and field names (e.g., `rank`, `sum_field`, `average_field`).
 #' @param frame Number[] A frame specification as a two-element array indicating how the sliding window should proceed. The array entries should either be a number indicating the offset from the current data object, or `null` to indicate unbounded rows preceding or following the current data object. The default value is `[null, 0]`, indicating that the sliding window includes the current object and all preceding objects. The value `[-5, 5]` indicates that the window should include five objects preceding and five objects following the current object. Finally, `[null, null]` indicates that the window frame should always include all data objects.
 #' @param ignorePeers Boolean Indicates if the sliding window frame should ignore peer values. (Peer values are those considered identical by the _sort_ criteria). The default is `false`, causing the window frame to expand to include all peer values. If set to `true`, the window frame will be defined by offset values only. This setting only affects those operations that depend on the window frame, namely aggregation operations and the *first_value*, *last_value*, and *nth_value* window operations.
-#' @return a {0} transform object
+#' @return a transform object
 #' @export
 vega_window_transform <- function(
   type,
@@ -31,7 +25,7 @@ vega_window_transform <- function(
   params=NULL,
   as=NULL,
   frame=NULL,
-  ignorePeers=NULL,
+  ignorePeers=NULL
 ) {
   args <- list(sort=sort, groupby=groupby, ops=ops, fields=fields, params=params, as=as, frame=frame, ignorePeers=ignorePeers)
   args <- args[!unlist(lapply(args, is.null))]

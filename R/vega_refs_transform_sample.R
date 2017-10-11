@@ -7,11 +7,11 @@
 #'
 #' @param type All transforms require a type property, specifying the name of the transform.
 #' @param size Number The maximum number of data objects to include in the sample. The default value is `1000`.
-#' @return a {0} transform object
+#' @return a transform object
 #' @export
 vega_sample_transform <- function(
   type,
-  size=NULL,
+  size=NULL
 ) {
   args <- list(size=size)
   args <- args[!unlist(lapply(args, is.null))]

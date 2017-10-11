@@ -8,13 +8,13 @@
 #' 
 #'
 #' @param type All transforms require a type property, specifying the name of the transform.
-#' @param from Data {% include required %} The name of the secondary data stream upon which to perform the lookup.
-#' @param key Field {% include required %} The key field on the secondary stream.
+#' @param from Data (required) The name of the secondary data stream upon which to perform the lookup.
+#' @param key Field (required) The key field on the secondary stream.
 #' @param values Field[] The data fields to copy from the secondary stream to the primary stream. If not specified, a reference to the full data record is copied.
-#' @param fields Field[] {% include required %} The data fields in the primary stream to lookup.
+#' @param fields Field[] (required) The data fields in the primary stream to lookup.
 #' @param as String[] The output fields at which to write data found in the secondary stream. If not specified and a _values_ parameter is supplied, the names of the fields in the _values_ array will be used. This parameter is required if multiple _fields_ are provided or _values_ is unspecified.
 #' @param default Any The default value to assign if lookup fails (default `null`).
-#' @return a {0} transform object
+#' @return a transform object
 #' @export
 vega_lookup_transform <- function(
   type,
@@ -23,7 +23,7 @@ vega_lookup_transform <- function(
   values=NULL,
   fields=NULL,
   as=NULL,
-  default=NULL,
+  default=NULL
 ) {
   args <- list(from=from, key=key, values=values, fields=fields, as=as, default=default)
   args <- args[!unlist(lapply(args, is.null))]

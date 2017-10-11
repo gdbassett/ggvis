@@ -10,14 +10,14 @@
 #' @param fields Field[] The data fields for which to compute aggregate functions. This array should align with the _ops_ and _as_ arrays. If no _fields_ and _ops_ are specified, a `count` aggregation will be used by default.
 #' @param ops String[] The aggregation operations to apply to the _fields_, such as `sum`, `average` or `count`. See the [aggregate operation reference](#ops) for more.
 #' @param as String[] The output field names to use for each aggregated field in _fields_. If not specified, names will be automatically generated based on the operation and field names (e.g., `sum_field`, `average_field`).
-#' @return a {0} transform object
+#' @return a transform object
 #' @export
 vega_joinaggregate_transform <- function(
   type,
   groupby=NULL,
   fields=NULL,
   ops=NULL,
-  as=NULL,
+  as=NULL
 ) {
   args <- list(groupby=groupby, fields=fields, ops=ops, as=as)
   args <- args[!unlist(lapply(args, is.null))]

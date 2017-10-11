@@ -6,7 +6,7 @@
 #' @return a ggvis object
 #' @export
 add_title <- function(vis, ...) {
-  vis$options$title <- vega_title(...)
+  vis$vega$title <- vega_title(...)
   vis
 }
 
@@ -257,12 +257,22 @@ add_projection <- function(vis, ...) {
 #' The transform is added to the first data then group mark found matching 'name'.  If none are found, no transform is added.
 #'
 #' @param vis a ggvis object
-#' @param name a data or mark object name
+#' @param name string a data or mark object name
+#' @param type string type of transform to add
 #' @param ... vega transform properties
 #' @return a ggvis object
 #' @export
-add_transform <- function(vis, name, ...) {
-  transform <- vega_transform(...)
+add_transform <- function(vis, name, type, ...) {
+  transforms <- c("aggregate", "bin", "collect", "contour", "countpattern", "cross", "crossfilter",
+                  "density", "extent", "filter", "fold", "force", "formula", "geojson", "geopath",
+                  "geopoint", "geoshape", "graticule", "identifier", "impute", "joinaggregate",
+                  "linkpath", "lookup", "nest", "pack" , "partition", "pie", "resolvefilter", "sample",
+                  "sequence", "stack", "stratify", "tree", "treelinks", "treemap", "voronoi", "window",
+                  "wordcloud")
+  if (!type %in% transforms) stop(paste0("Type ", type, " is not a valid transform."))
+
+  transform <- eval(paste0("vega_", type, "_transform(type, ...)"))
+
 
   locs <- c()
 

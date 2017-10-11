@@ -6,14 +6,14 @@
 #' 
 #'
 #' @param type All transforms require a type property, specifying the name of the transform.
-#' @param field Field {% include required %} The data field for which to compute the extent.
+#' @param field Field (required) The data field for which to compute the extent.
 #' @param signal String If defined, binds the computed extent array to a signal with the given name.
-#' @return a {0} transform object
+#' @return a transform object
 #' @export
 vega_extent_transform <- function(
   type,
   field=NULL,
-  signal=NULL,
+  signal=NULL
 ) {
   args <- list(field=field, signal=signal)
   args <- args[!unlist(lapply(args, is.null))]

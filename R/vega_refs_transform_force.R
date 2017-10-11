@@ -11,10 +11,6 @@
 #' 
 #' The force transform modifies the input node data _only_. It does not modify any properties of  link data. Instead, use a [lookup transform](../lookup) to join the node data with the link data. Then, use a transform such as [linkpath](../linkpath) to layout the links.
 #' 
-#' ## Example
-#' 
-#' {% include embed spec="force" %}
-#' 
 #'
 #' @param type All transforms require a type property, specifying the name of the transform.
 #' @param static Boolean Indicates if the simulation should be computed in batch to produce a static layout (`true`) or should be animated (`false`). The default is `false`.
@@ -26,7 +22,7 @@
 #' @param velocityDecay Number The velocity decay factor is akin to atmospheric friction; after the application of any forces during an iteration, each node's velocity is multiplied by _1 - velocityDecay_ (default `0.4`).
 #' @param forces [Force](#forces) An array of objects defining the forces to include in the simulation. See the [forces reference](#forces) for more.
 #' @param as String[] The output fields to which node positions and velocities are written. The default is `["x", "y", "vx", "vy"]`.
-#' @return a {0} transform object
+#' @return a transform object
 #' @export
 vega_force_transform <- function(
   type,
@@ -38,7 +34,7 @@ vega_force_transform <- function(
   alphaTarget=NULL,
   velocityDecay=NULL,
   forces=NULL,
-  as=NULL,
+  as=NULL
 ) {
   args <- list(static=static, restart=restart, iterations=iterations, alpha=alpha, alphaMin=alphaMin, alphaTarget=alphaTarget, velocityDecay=velocityDecay, forces=forces, as=as)
   args <- args[!unlist(lapply(args, is.null))]

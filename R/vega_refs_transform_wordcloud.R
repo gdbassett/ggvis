@@ -4,12 +4,6 @@
 #' 
 #' The **wordcloud** transform computes a word cloud layout, similar to [Wordle](http://www.wordle.net/). The wordcloud transform is intended for visualizing words or phrases with the [text mark type](../../marks/text). This transform uses [Jason Davies' wordcloud implementation](https://www.jasondavies.com/wordcloud/).
 #' 
-#' ## Example
-#' 
-#' {% include embed spec="wordcloud" %}
-#' 
-#' In this example, word angles are randomly selected from the set [-rotate, 0, rotate].
-#' 
 #'
 #' @param type All transforms require a type property, specifying the name of the transform.
 #' @param font String|Expr The font family to use for a word.
@@ -22,7 +16,7 @@
 #' @param text Field The data field with the word text.
 #' @param spiral String The spiral layout method used to place words. One of `archimedean` (the default) or `rectangular`.
 #' @param as String[] The output fields written by the transform. The default is `["x", "y", "font", "fontSize", "fontStyle", "fontWeight", "angle"]`
-#' @return a {0} transform object
+#' @return a transform object
 #' @export
 vega_wordcloud_transform <- function(
   type,
@@ -35,7 +29,7 @@ vega_wordcloud_transform <- function(
   rotate=NULL,
   text=NULL,
   spiral=NULL,
-  as=NULL,
+  as=NULL
 ) {
   args <- list(font=font, fontStyle=fontStyle, fontWeight=fontWeight, fontSize=fontSize, fontSizeRange=fontSizeRange, padding=padding, rotate=rotate, text=text, spiral=spiral, as=as)
   args <- args[!unlist(lapply(args, is.null))]

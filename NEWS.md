@@ -1,4 +1,6 @@
 # ggvis 0.4.3.9XXX
+* 9015: updated scales documentation, title, and config functions as well as adding a select for the correct transform to add_transform().  mainly clean-up work.
+
 * 9014: added transforms (UNTESTED)
 
 * 9013: added rest of signals/inputs/events functions.  Added projection functions.  Added legend functions. (UNTESTED)

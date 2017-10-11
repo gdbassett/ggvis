@@ -6,12 +6,12 @@
 #' 
 #'
 #' @param type All transforms require a type property, specifying the name of the transform.
-#' @param expr Expr {% include required %} A predicate [expression](../../expressions) for filtering the data. If the expression evaluates to `false`, the data object will be filtered.
-#' @return a {0} transform object
+#' @param expr Expr (required) A predicate [expression](../../expressions) for filtering the data. If the expression evaluates to `false`, the data object will be filtered.
+#' @return a transform object
 #' @export
 vega_filter_transform <- function(
   type,
-  expr=NULL,
+  expr=NULL
 ) {
   args <- list(expr=expr)
   args <- args[!unlist(lapply(args, is.null))]

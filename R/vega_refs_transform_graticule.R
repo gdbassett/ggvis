@@ -6,10 +6,6 @@
 #' 
 #' This transform generates a new data stream containing a single [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON) data object for the graticule, which can subsequently be drawn using the [geopath](../geopath) or [geoshape](../geoshape) transform. This transform uses the [d3-geo](https://github.com/d3/d3-geo) library.
 #' 
-#' ## Example
-#' 
-#' {% include embed spec="graticule" %}
-#' 
 #'
 #' @param type All transforms require a type property, specifying the name of the transform.
 #' @param field Field The data field to bin.
@@ -20,7 +16,7 @@
 #' @param stepMinor Number[] The minor step angles of the graticule (default `[10, 10]`).
 #' @param step Number[] Sets both the major and minor step angles to the same values.
 #' @param precision Number The precision of the graticule in degrees (default `2.5`).
-#' @return a {0} transform object
+#' @return a transform object
 #' @export
 vega_graticule_transform <- function(
   type,
@@ -31,7 +27,7 @@ vega_graticule_transform <- function(
   stepMajor=NULL,
   stepMinor=NULL,
   step=NULL,
-  precision=NULL,
+  precision=NULL
 ) {
   args <- list(field=field, extentMajor=extentMajor, extentMinor=extentMinor, extent=extent, stepMajor=stepMajor, stepMinor=stepMinor, step=step, precision=precision)
   args <- args[!unlist(lapply(args, is.null))]

@@ -6,12 +6,12 @@
 #' 
 #'
 #' @param type All transforms require a type property, specifying the name of the transform.
-#' @param as String {% include required %} The output field at which to write the unique identifier value.
-#' @return a {0} transform object
+#' @param as String (required) The output field at which to write the unique identifier value.
+#' @return a transform object
 #' @export
 vega_identifier_transform <- function(
   type,
-  as=NULL,
+  as=NULL
 ) {
   args <- list(as=as)
   args <- args[!unlist(lapply(args, is.null))]

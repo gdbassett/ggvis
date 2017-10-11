@@ -6,22 +6,18 @@
 #' 
 #' This transform uses the [d3-geo](https://github.com/d3/d3-geo) library.
 #' 
-#' ## Example
-#' 
-#' {% include embed spec="geopath" %}
-#' 
 #'
 #' @param type All transforms require a type property, specifying the name of the transform.
-#' @param projection String {% include required %} The name of the projection to use.
+#' @param projection String (required) The name of the projection to use.
 #' @param field Field The data field containing GeoJSON data. If unspecified, the full input data object will be used.
 #' @param as String The output field to write. The default is `"path"`.
-#' @return a {0} transform object
+#' @return a transform object
 #' @export
 vega_geopath_transform <- function(
   type,
   projection=NULL,
   field=NULL,
-  as=NULL,
+  as=NULL
 ) {
   args <- list(projection=projection, field=field, as=as)
   args <- args[!unlist(lapply(args, is.null))]

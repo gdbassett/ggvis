@@ -65,9 +65,7 @@ vega_title <- function(text,
       stop("Title text must be a character string.")
     }
   } else {
-    if (!is.vega_title(args)) {
-      stop("Title arguments do not match the VEGA title spec: https://vega.github.io/vega/docs/title/")
-    }
+    is.vega_title(args)
     return(args)
   }
 }

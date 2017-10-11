@@ -7,11 +7,11 @@
 #'
 #' @param type All transforms require a type property, specifying the name of the transform.
 #' @param sort Compare A comparator definition for sorting data objects.
-#' @return a {0} transform object
+#' @return a transform object
 #' @export
 vega_collect_transform <- function(
   type,
-  sort=NULL,
+  sort=NULL
 ) {
   args <- list(sort=sort)
   args <- args[!unlist(lapply(args, is.null))]

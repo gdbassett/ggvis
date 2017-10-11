@@ -6,8 +6,8 @@
 #' 
 #'
 #' @param type All transforms require a type property, specifying the name of the transform.
-#' @param field Field {% include required %} The data field to bin.
-#' @param extent Number[] {% include required %} A two-element array with the minimum and maximum values of the bin range.
+#' @param field Field (required) The data field to bin.
+#' @param extent Number[] (required) A two-element array with the minimum and maximum values of the bin range.
 #' @param anchor Number A value in the binned domain at which to anchor the bins, shifting the bin boundaries if necessary to ensure that a boundary aligns with the anchor value. By default, the minimum bin extent value serves as the anchor.
 #' @param maxbins Number The maximum number of bins to create (default `20`).
 #' @param base Number The number base to use for automatic bin determination (default `10`).
@@ -18,7 +18,7 @@
 #' @param nice Boolean If `true` (the default), attempts to make the bin boundaries use human-friendly boundaries, such as multiples of ten.
 #' @param signal String If defined, binds the computed binning specification (an object with _start_, _stop_ and _step_ properties) to a signal with the given name.
 #' @param as String[] The output fields at which to write the start and end bin values. The default is `["bin0", "bin1"]`.
-#' @return a {0} transform object
+#' @return a transform object
 #' @export
 vega_bin_transform <- function(
   type,
@@ -33,7 +33,7 @@ vega_bin_transform <- function(
   divide=NULL,
   nice=NULL,
   signal=NULL,
-  as=NULL,
+  as=NULL
 ) {
   args <- list(field=field, extent=extent, anchor=anchor, maxbins=maxbins, base=base, step=step, steps=steps, minstep=minstep, divide=divide, nice=nice, signal=signal, as=as)
   args <- args[!unlist(lapply(args, is.null))]

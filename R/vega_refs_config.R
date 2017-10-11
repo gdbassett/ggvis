@@ -212,9 +212,7 @@ vega_config <- function(
     args <- c(args[names(args) != "axes"], args$axes)
   }
 
-  if (!is.vega_config(args)) {
-    stop("Config arguments do not match the VEGA config spec: https://vega.github.io/vega/docs/config/#title")
-  }
+  is.vega_config(args)
 
   args
 }

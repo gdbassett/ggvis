@@ -8,7 +8,7 @@
 #' 
 #'
 #' @param type All transforms require a type property, specifying the name of the transform.
-#' @param size Number[] {% include required %} The dimensions `[width, height]` over which to compute contours. If the values parameter is provided, this must be the dimensions of the input data. If density estimation is performed, this is the output view dimensions in pixels.
+#' @param size Number[] (required) The dimensions `[width, height]` over which to compute contours. If the values parameter is provided, this must be the dimensions of the input data. If density estimation is performed, this is the output view dimensions in pixels.
 #' @param values Number[]  An array of numeric values representing an width x height grid of values over which to compute contours. If unspecified, this transform will instead compute contours for the kernel density estimate of input data.
 #' @param x Field The pixel x-coordinate field for density estimation.
 #' @param y Field The pixel y-coordinate field for density estimation.
@@ -17,7 +17,7 @@
 #' @param thresholds Number[] A threshold array of explicit contour boundaries. If this parameter is set, the _count_ and _nice_ parameters will be ignored.
 #' @param count Number The desired number of contours. This parameter is ignored if the _thresholds_ parameter is provided.
 #' @param nice Boolean A boolean flag (default `false`) indicating if the contour threshold values should be automatically aligned to "nice", human-friendly values. Setting this flag may cause the number of thresholds to deviate from the exact _count_.
-#' @return a {0} transform object
+#' @return a transform object
 #' @export
 vega_contour_transform <- function(
   type,
@@ -29,7 +29,7 @@ vega_contour_transform <- function(
   bandwidth=NULL,
   thresholds=NULL,
   count=NULL,
-  nice=NULL,
+  nice=NULL
 ) {
   args <- list(size=size, values=values, x=x, y=y, cellSize=cellSize, bandwidth=bandwidth, thresholds=thresholds, count=count, nice=nice)
   args <- args[!unlist(lapply(args, is.null))]

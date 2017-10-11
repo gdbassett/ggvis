@@ -7,11 +7,11 @@
 #'
 #' @param type All transforms require a type property, specifying the name of the transform.
 #' @param key Field A data field containing a unique key (identifier) for each node. This must be the same field used by the upstream [nest](../nest) or [stratify](../stratify) transform.
-#' @return a {0} transform object
+#' @return a transform object
 #' @export
 vega_treelinks_transform <- function(
   type,
-  key=NULL,
+  key=NULL
 ) {
   args <- list(key=key)
   args <- args[!unlist(lapply(args, is.null))]

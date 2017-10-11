@@ -6,14 +6,14 @@
 #' 
 #'
 #' @param type All transforms require a type property, specifying the name of the transform.
-#' @param key Field {% include required %} A data field containing a unique key (identifier) for each node.
-#' @param parentKey Field {% include required %} A data field containing the key value for each node's parent in the hierarchy.
-#' @return a {0} transform object
+#' @param key Field (required) A data field containing a unique key (identifier) for each node.
+#' @param parentKey Field (required) A data field containing the key value for each node's parent in the hierarchy.
+#' @return a transform object
 #' @export
 vega_stratify_transform <- function(
   type,
   key=NULL,
-  parentKey=NULL,
+  parentKey=NULL
 ) {
   args <- list(key=key, parentKey=parentKey)
   args <- args[!unlist(lapply(args, is.null))]

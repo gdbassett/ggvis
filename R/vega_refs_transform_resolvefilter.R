@@ -6,14 +6,14 @@
 #' 
 #'
 #' @param type All transforms require a type property, specifying the name of the transform.
-#' @param filter Signal {% include required %} A signal reference to a backing [crossfilter](../crossfilter) transform.
-#' @param ignore Number {% include required %} A bit mask indicating which fields in the crossfilter should be ignored. Each bit corresponds to a field and query in the crossfilter transform's _fields_ and _query_ arrays. If the corresponding bit is on, that field and query will be ignored when resolving the filter. All other queries must pass the filter for a tuple to be included down stream.
-#' @return a {0} transform object
+#' @param filter Signal (required) A signal reference to a backing [crossfilter](../crossfilter) transform.
+#' @param ignore Number (required) A bit mask indicating which fields in the crossfilter should be ignored. Each bit corresponds to a field and query in the crossfilter transform's _fields_ and _query_ arrays. If the corresponding bit is on, that field and query will be ignored when resolving the filter. All other queries must pass the filter for a tuple to be included down stream.
+#' @return a transform object
 #' @export
 vega_resolvefilter_transform <- function(
   type,
   filter=NULL,
-  ignore=NULL,
+  ignore=NULL
 ) {
   args <- list(filter=filter, ignore=ignore)
   args <- args[!unlist(lapply(args, is.null))]

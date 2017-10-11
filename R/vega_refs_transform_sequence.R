@@ -6,16 +6,16 @@
 #' 
 #'
 #' @param type All transforms require a type property, specifying the name of the transform.
-#' @param start Number {% include required %} The starting value of the sequence.
-#' @param stop Number {% include required %} The ending value (exclusive) of the sequence.
+#' @param start Number (required) The starting value of the sequence.
+#' @param stop Number (required) The ending value (exclusive) of the sequence.
 #' @param step Number The step value between sequence entries (default `1`, or `-1` if _stop < start_).
-#' @return a {0} transform object
+#' @return a transform object
 #' @export
 vega_sequence_transform <- function(
   type,
   start=NULL,
   stop=NULL,
-  step=NULL,
+  step=NULL
 ) {
   args <- list(start=start, stop=stop, step=step)
   args <- args[!unlist(lapply(args, is.null))]

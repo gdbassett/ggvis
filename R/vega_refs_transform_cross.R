@@ -8,12 +8,12 @@
 #' @param type All transforms require a type property, specifying the name of the transform.
 #' @param filter Expr An optional filter expression for limiting the results of the cross-product.
 #' @param as Array The output fields for the two data objects being crossed. The default is `["a", "b"]`.
-#' @return a {0} transform object
+#' @return a transform object
 #' @export
 vega_cross_transform <- function(
   type,
   filter=NULL,
-  as=NULL,
+  as=NULL
 ) {
   args <- list(filter=filter, as=as)
   args <- args[!unlist(lapply(args, is.null))]

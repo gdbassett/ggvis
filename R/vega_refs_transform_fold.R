@@ -8,14 +8,14 @@
 #' 
 #'
 #' @param type All transforms require a type property, specifying the name of the transform.
-#' @param fields Field[] {% include required %} An array of data fields indicating the properties to fold.
+#' @param fields Field[] (required) An array of data fields indicating the properties to fold.
 #' @param as String[] The output field names for the _key_ and _value_ properties produced by the fold transform. The default is `["key", "value"]`.
-#' @return a {0} transform object
+#' @return a transform object
 #' @export
 vega_fold_transform <- function(
   type,
   fields=NULL,
-  as=NULL,
+  as=NULL
 ) {
   args <- list(fields=fields, as=as)
   args <- args[!unlist(lapply(args, is.null))]
