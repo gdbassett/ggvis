@@ -1,4 +1,9 @@
 # ggvis 0.4.3.9XXX
+* 9016: update ggvega and properties systems as well as layer_bar2().  Working with basic execution.  Still missing output printing for vis$vega object and the transform code path in layer_bar2() is UNTESTED.
+> p <- ggvega(mtcars, x=cyl, y=mpg, stroke="black") %>% layer_bars2()
+layer_bars2 'id' is 206284932
+> readr::write_lines(ggvis::dump_spec_(p), "~/Documents/Development/tmp/test.json")
+
 * 9015: updated scales documentation, title, and config functions as well as adding a select for the correct transform to add_transform().  mainly clean-up work.
 
 * 9014: added transforms (UNTESTED)

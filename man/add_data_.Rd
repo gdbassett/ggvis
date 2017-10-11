@@ -4,14 +4,14 @@
 \alias{add_data_}
 \title{Add dataset to a visualisation}
 \usage{
-add_data_(vis, data, name = deparse2(substitute(data)))
+add_data_(vis, data, name = NULL)
 }
 \arguments{
 \item{vis}{Visualisation to modify.}
 
 \item{data}{Data set to add.}
 
-\item{name}{Data of data - optional, but helps produce informative
+\item{name}{name of data - optional, but helps produce informative
 error messages.}
 }
 \description{

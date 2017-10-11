@@ -16,25 +16,33 @@
 #'   \code{y}, \code{stroke} (color), \code{fill}, \code{opacity}, \code{shape}
 #' @return visualization object
 #' @export
-vega <- function(data=NULL,
+ggvega <- function(data=NULL,
                  ...,
                  schema="https://vega.github.io/schema/vega/v3.0.json",
                  description=NULL,
                  background=NULL,
-                 width=NULL,
-                 height=NULL,
+                 width=500,
+                 height=309,
                  padding=NULL,
                  autosize="pad",
-                 title=NULL) {
+                 title=NULL
+  ) {
   # create vega object
-  vis <- structure(list(properties <- rlang::quos(...), vega = list()), class = "ggvega")
+  vis <- structure(
+    list(
+      properties = data.frame(value=character(), encode=character(), from=character(), field=character()),
+      vega = list()
+    ), class = "ggvega")
+
+  # add property environments.  I'm sure I'm f'ing this up and tidyverse offers some much better solution. I'm just not that good. - gdb 171011
+  vis[['properties']] <- update_props(vis$properties, from=deparse2(substitute(data)), ...)
 
   # add root properties
   vis <- update_vega(vis, schema=schema, description=description, background=background, width=width,
                      height=height, padding=padding, autosize=autosize, title=title)
 
   # add data
-  vis <- add_data_(vis, data)
+  vis <- add_data_(vis, data, deparse2(substitute(data)))
 
   # return
   vis
@@ -45,14 +53,20 @@ vega <- function(data=NULL,
 #'
 #' @param vis Visualisation to modify.
 #' @param data Data set to add.
-#' @param name Data of data - optional, but helps produce informative
+#' @param name name of data - optional, but helps produce informative
 #'  error messages.
 #' @export
 #' @examples
 #' mtcars %>% ggvis(~mpg, ~wt) %>% layer_points()
 #' NULL %>% ggvis(~mpg, ~wt) %>% add_data(mtcars) %>% layer_points()
-add_data_ <- function(vis, data, name = deparse2(substitute(data))) {
+add_data_ <- function(vis, data, name=NULL) {
   if (is.null(data)) return(vis)
+
+  if (is.null(name)) {
+    name <- paste0("data_", rand_id())
+    message(paste0("Data name is ", name, "."))
+  }
+
 
   # Add static data as well. (Duplicative. Using to transition from reactive shiny data.) - GDB 171004
   if (!'data' %in% names(vis$vega)) vis$vega[["data"]] <- list()
@@ -135,8 +149,51 @@ update_vega <- function(vis,
 #' )
 #' vega_render(dump_spec(p), tooltip_opts = tooltips_opts)
 print.ggvega <- function(x, launch = interactive(), ...) {
-  out <- vega_render(jsonlite::toJSON(x$vega, auto_unbox = TRUE), ...)
+  out <- vega_render(jsonlite::toJSON(x$vega, auto_unbox = TRUE, force = TRUE, null = "null"), ...)
 
   if (launch) print(out)
   out
+}
+
+
+#' update properties from ggvega, a signal, transform, or data source
+#'
+#' @param properties properties data frame (from vis$properties)
+#' @param from string the name of the source if applicable. e.g. 'mtcars'
+#' @param ... parameters (e.g. x=cyl, y=mpg, fill="blue")
+#' @return a modified visualization
+update_props <- function(properties, from=NA, ...) {
+
+  args <- rlang::quos(...)
+
+  if (length(args) == 0) return(properties) # nothing to add
+
+  # convert quosures to strings
+  new_props <- data.frame(encode=names(args), field=as.character(args), stringsAsFactors = FALSE)
+  new_props[['field']] <- substr(new_props$field, 2, nchar(new_props$field))
+  # add encode names for missing names
+  if (sum(new_props$encode == "") + length(intersect(new_props$encode, c("x", "y"))) > 2) {
+    stop("Too many unnamed properties. You can only have two, (x and y).")
+  }
+  new_props[new_props$encode == "", 'encode'] <- c("x", "y")[1:sum(new_props$encode == "")]
+  # identify sourced and static columns
+  new_props[['value']] <- grepl("^\".*\"$", new_props[['field']])
+  new_props[['field']] <- gsub("^\"(.*)\"$", "\\1", new_props[['field']])
+  # identify data field name
+  new_props[['from']] <- from
+  new_props[['from']] <- ifelse(new_props$value, NA, new_props$from)
+  # reorder
+  new_props <- new_props[, c("value", "encode", "from", "field")]
+
+  rbind(properties, new_props)
+}
+
+#' Export the ggvis vega schema json
+#' @param vis a vega visualisation
+#' @return the vega spec
+#' @export
+dump_spec_ <- function(vis) {
+
+  jsonlite::toJSON(vis$vega, pretty = TRUE, auto_unbox = TRUE,
+                   force = TRUE, null = "null")
 }

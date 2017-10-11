@@ -26,7 +26,7 @@ is.vega <- function(vis, error=FALSE) {
 #' @return logical
 #' @export
 is.vega_title <- function(obj, error=FALSE) {
-  spec <- jsonlite::toJSON(list(title = obj), auto_unbox = TRUE) # easier to build full object than, subset spec
+  spec <- jsonlite::toJSON(list(title = obj), auto_unbox = TRUE, force = TRUE, null = "null") # easier to build full object than, subset spec
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^title", err$field)) # judge only title errors
@@ -43,7 +43,7 @@ is.vega_title <- function(obj, error=FALSE) {
 #' @return logical
 #' @export
 is.vega_config <- function(obj, error=FALSE) {
-  spec <- jsonlite::toJSON(list(config = obj), auto_unbox = TRUE) # easier to build full object than, subset spec
+  spec <- jsonlite::toJSON(list(config = obj), auto_unbox = TRUE, force = TRUE, null = "null") # easier to build full object than, subset spec
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^config", err$field)) # judge only config errors
@@ -60,7 +60,7 @@ is.vega_config <- function(obj, error=FALSE) {
 #' @return logical
 #' @export
 is.vega_mark <- function(obj, error=FALSE) {
-  spec <- jsonlite::toJSON(list(mark = list(obj)), auto_unbox = TRUE) # easier to build full object than, subset spec
+  spec <- jsonlite::toJSON(list(mark = list(obj)), auto_unbox = TRUE, force = TRUE, null = "null") # easier to build full object than, subset spec
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^mark", err$field)) # judge only mark errors
@@ -78,7 +78,7 @@ is.vega_mark <- function(obj, error=FALSE) {
 #' @return logical
 #' @export
 is.vega_encode <- function(obj, error=FALSE) {
-  spec <- jsonlite::toJSON(list(mark = list(list(encode=obj))), auto_unbox = TRUE) # easier to build full object than, subset spec
+  spec <- jsonlite::toJSON(list(mark = list(list(encode=obj))), auto_unbox = TRUE, force = TRUE, null = "null") # easier to build full object than, subset spec
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   # TODO: The validation line below doesn't seem to be validating (or maybe the schema is too lax) - 171005
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
@@ -97,7 +97,7 @@ is.vega_encode <- function(obj, error=FALSE) {
 #' @return logical
 #' @export
 is.vega_scale <- function(obj, error=FALSE) {
-  spec <- jsonlite::toJSON(list(scales = list(obj)), auto_unbox = TRUE) # easier to build full object than, subset spec
+  spec <- jsonlite::toJSON(list(scales = list(obj)), auto_unbox = TRUE, force = TRUE, null = "null") # easier to build full object than, subset spec
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^scales", err$field)) # judge only mark errors
@@ -115,7 +115,7 @@ is.vega_scale <- function(obj, error=FALSE) {
 #' @return logical
 #' @export
 is.vega_axis <- function(obj, error=FALSE) {
-  spec <- jsonlite::toJSON(list(axes = list(obj)), auto_unbox = TRUE) # easier to build full object than, subset spec
+  spec <- jsonlite::toJSON(list(axes = list(obj)), auto_unbox = TRUE, force = TRUE, null = "null") # easier to build full object than, subset spec
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^axes", err$field)) # judge only axis errors
@@ -134,7 +134,7 @@ is.vega_axis <- function(obj, error=FALSE) {
 #' @return logical
 #' @export
 is.vega_signal <- function(obj, error=FALSE) {
-  spec <- jsonlite::toJSON(list(signals = list(obj)), auto_unbox = TRUE) # easier to build full object than, subset spec
+  spec <- jsonlite::toJSON(list(signals = list(obj)), auto_unbox = TRUE, force = TRUE, null = "null") # easier to build full object than, subset spec
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^signals", err$field)) # judge only signals errors
@@ -153,7 +153,7 @@ is.vega_signal <- function(obj, error=FALSE) {
 #' @return logical
 #' @export
 is.vega_event <- function(obj, error=FALSE) {
-  spec <- jsonlite::toJSON(list(signals = list(name="test", on=list(obj))), auto_unbox = TRUE) # easier to build full object than, subset spec
+  spec <- jsonlite::toJSON(list(signals = list(name="test", on=list(obj))), auto_unbox = TRUE, force = TRUE, null = "null") # easier to build full object than, subset spec
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^signals[.]on", err$field)) # judge only event errors
@@ -172,7 +172,7 @@ is.vega_event <- function(obj, error=FALSE) {
 #' @return logical
 #' @export
 is.vega_input <- function(obj, error=FALSE) {
-  spec <- jsonlite::toJSON(list(signals = list(name="test", bind=list(obj))), auto_unbox = TRUE) # easier to build full object than, subset spec
+  spec <- jsonlite::toJSON(list(signals = list(name="test", bind=list(obj))), auto_unbox = TRUE, force = TRUE, null = "null") # easier to build full object than, subset spec
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^signals[.]bind", err$field)) # judge only input errors
@@ -191,7 +191,7 @@ is.vega_input <- function(obj, error=FALSE) {
 #' @return logical
 #' @export
 is.vega_legend <- function(obj, error=FALSE) {
-  spec <- jsonlite::toJSON(list(legends = list(obj)), auto_unbox = TRUE) # easier to build full object than, subset spec
+  spec <- jsonlite::toJSON(list(legends = list(obj)), auto_unbox = TRUE, force = TRUE, null = "null") # easier to build full object than, subset spec
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^legends", err$field)) # judge only legend errors
@@ -210,7 +210,7 @@ is.vega_legend <- function(obj, error=FALSE) {
 #' @return logical
 #' @export
 is.vega_projection <- function(obj, error=FALSE) {
-  spec <- jsonlite::toJSON(list(projections = list(obj)), auto_unbox = TRUE) # easier to build full object than, subset spec
+  spec <- jsonlite::toJSON(list(projections = list(obj)), auto_unbox = TRUE, force = TRUE, null = "null") # easier to build full object than, subset spec
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^projections", err$field)) # judge only projection errors
@@ -229,7 +229,7 @@ is.vega_projection <- function(obj, error=FALSE) {
 #' @return logical
 #' @export
 is.vega_transform <- function(obj, error=FALSE) {
-  spec <- jsonlite::toJSON(list(data = list(name="test", transform=list(obj))), auto_unbox = TRUE) # easier to build full object than, subset spec
+  spec <- jsonlite::toJSON(list(data = list(name="test", transform=list(obj))), auto_unbox = TRUE, force = TRUE, null = "null") # easier to build full object than, subset spec
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^data[.]transform", err$field)) # judge only transform errors

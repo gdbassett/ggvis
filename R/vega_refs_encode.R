@@ -76,3 +76,29 @@ vega_encode <- function(
 
   args
 }
+
+#' convert a line of a properties dataframe to a list of encode parameters
+#'
+#' @param prop a one-line properties data frame. (If more lines exist, only the first
+#'   line will be used.)
+#' @param scale string a scale name
+#' @return list of encode properties
+encode_prop <- function(prop, scale=NULL) {
+  # if prop is a list, return it.
+  if (class(prop) == "list") {
+    return(prop)
+  }
+
+  prop <- prop[1, ]
+
+  ret <- list()
+  # if it's a value, just return the value
+  if (prop$value) ret <- list(value=prop$field)
+
+  # if it's a field, set that
+  if (!prop$value) ret <- list(field=prop$field)
+
+  if (!is.null(scale)) ret <- c(ret, list(scale=scale))
+
+  ret
+}

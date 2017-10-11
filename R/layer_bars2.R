@@ -27,10 +27,7 @@
 #'
 #' @param vis Visualisation to modify
 #' @param ... Visual properties used to override defaults.
-#' @param data THe data to use for this figure. May be a dataframe or a name.
-#' @param width Width of each bar. When x is continuous, this controls the width
-#'   in the same units as x. When x is categorical, this controls the width as a
-#'   proportion of the spacing between items (default is 0.9).
+#' @param from The data or other source to use for this figure. May be a dataframe or a name.
 #' @param group Field or fields to group by for grouped bar chart
 #' @param stack If there are multiple bars to be drawn at an x location, should
 #'   the bars be stacked? If FALSE, the bars will be overplotted on each other.
@@ -76,8 +73,10 @@
 #' # If grouping var is categorical, grouping is done automatically
 #' cocaine %>% ggvis(x = ~state, fill = ~as.factor(month)) %>%
 #'   layer_bars()
-layer_bars2 <- function(vis, ..., data=NULL, group=NULL, stack = TRUE, width = NULL, id=NULL) {
-  new_props <- merge_props(cur_props(vis), props(...)) # turn input into props (so ~x > x.update, etc) and merge with existing props
+layer_bars2 <- function(vis, ..., from=NULL, group=NULL, stack = TRUE, id=NULL) {
+
+  unsupported_encodes <- setdiff(names(rlang::quos(...)), c("x", "y", "enter", "exit", "hover"))
+  if (length(unsupported_encodes) > 0) stop(paste0("Encodes ", paste(unsupported_encodes, collapse=", ", " are unsupported in bar charts.")))
 
   # added so that items generated in layer can be uniquely identified in schema object. - gdb 171005
   if (is.null(id)) {
@@ -86,83 +85,55 @@ layer_bars2 <- function(vis, ..., data=NULL, group=NULL, stack = TRUE, width = N
   }
 
   # added so data can be from existing vis or new. gdb 171005
-  if (is.null(data)) {
-    if ("data" %in% vis$vega) {
-      stop("Data not found. Have you added data?")
-    } else if (length(vis$vega$data) == 0) {
-      stop("Data not found. Have you added data?")
-    } else if (length(vis$vega$data) == 1) {
-      data_name <- vis$vega$data[[1]]$name
-    } else {
-      data_name <- vis$vega$data[[1]]$name
-      warning(paste0("Data source to use is ambiguous. Guessing ", data_name, ".")) # guess the first one
-    }
-  } else if (is.character(data)) {
-    data_name <- data
-    if (!data_name %in% unlist(purrr::map(vis$static_data, "name")))
-    { stop(paste0("Data ", data_name, " not found. Have you added data?")) }
+  if (is.null(from)) {
+    from <- vis$properties[!is.na(vis$properties$from), 'from']
+    if (length(unique(from)) > 1) message(paste0("'from' missing for layer_bars2 layer ", id, ".  Guessing ", from[1], "."))
+    from <- from[1]
+  } else if (is.character(from)) {
+    if (!from %in% unlist(purrr::map(vis$vega$data, "name")))
+    { stop(paste0("Data ", from, " not found. Have you added data?")) }
   } else {
-    data_name <- paste0(deparse2(substitute(data)), "_", id)
-    vis <- add_data(vis, data, data_name)
+    vis <- add_data(vis, from, paste0(deparse2(substitute(from)), "_", id))
   }
 
+  # join in any passed features
+  props <- update_props(vis$properties, from, ...)
 
-  check_unsupported_props(new_props, c("x", "y", "x2", "y2"),
-                          c("enter", "exit", "hover"), "layer_bars")
+  # deduplicate properties
+  props <- props[!duplicated(props$encode), ]
+  if (!"x" %in% props$encode) stop("Layer_bar2 requires a 'x' encode be defined.")
 
-  x_var <- find_prop_var(new_props, "x.update") # get the data column associated with the x axis
-  discrete_x <- prop_countable(cur_data(vis), new_props$x.update)
+  # add y as a count of x (implemented as a transform on the associated 'from'
+  if (!"y" %in% props$encode) {
+    locs <- which(from %in% unlist(purrr::map(vis$vega$data, "name")))
 
-  vis <- set_scale_label(vis, "x", prop_label(cur_props(vis)$x.update))
-
-
-  if (!is.null(new_props$y.update)) {
-    if (prop_countable(cur_data(vis), new_props$y.update)) {
-      stop("y variable (weights) must be numeric.")
-    }
-    y_var <- find_prop_var(new_props, "y.update")
-    vis <- set_scale_label(vis, "y", prop_label(cur_props(vis)$y.update))
-
-  } else {
-    y_var <- NULL
-    vis <- set_scale_label(vis, "y", "count")
+    vis <- add_transform(vis, name = from, "aggregate", groupby=props[props$encode=='x', 'field'], ops="count", as="count")
+    props <- rbind(props, data.frame(value=FALSE, encode="y", from=from, field="count"))
   }
 
-  if (discrete_x) {
-    if (is.null(width)) {
-      width <- 0.9
+  if (TRUE) { # used to be 'discrete_x'.  Not sure this is necessary.
+    if (!"width" %in% props$encode) {
+      props <- rbind(props, data.frame(value=TRUE, encode="width", from=NA, field=0.9, stringsAsFactors = FALSE))
     }
 
     if (stack || !is.null(group)) {
-      # TODO: If a grouping variable exists, need to add a transform. use 'stacked'.  ~group should be an enquoted param from ...
-      # transform <- list(
-      #   type = "stack",
-      #   groupby = group,
-      #   field = y_var,
-      #   sort = list(field = x_var, order="descending"),
-      #   as = c(paste(y_var, "0_", id), paste(y_var, "1_", id))
-      # )
-      # Old layer rects replaced by add_mark_
-      # v <- layer_rects(v,
-      #                  x = y_var, width = band(),
-      #                  y = 0, y2 = stats::formula(paste0("~", paste(y_var, "1_", id))))
       e <- vega_encode(update = list(
-        y = list(scale="y", value=0), y2 = list(scale="y", field=as.character(y_var)[2]),
-        x = list(scale="x", field=as.character(x_var)[2]), width = list(scale="x", band=width)
+        y = list(scale="y", value=0), y2 = encode_prop(props[props$encode=='y', ], scale='y'),
+        x = encode_prop(props[props$encode=='x', ], scale="x"), width = list(scale="x", band=props[props$encode=='width', 'field'])
       ))
-      vis <- add_mark_(vis, type="rect", from = list(data=data_name), encode=e, name=paste0("mark_", id))
+      vis <- add_mark_(vis, type="rect", from = list(data=from), encode=e, name=paste0("mark_", id))
     } else {
       # creat group mark
       s <- vega_scale() # TODO
       e <- vega_encode(update=list(y = list(scale="y", field=group)))
-      g <- vega_mark(type="group", from=list(data=data_name), encode=e, scales=list(s), name=paste0("group_mark_", id))
+      g <- vega_mark(type="group", from=list(data=from), encode=e, scales=list(s), name=paste0("group_mark_", id))
 
       # add mark to marks in group mark
       e <- vega_encode(update=list(
-        y = list(scale="y", value=0), y2 = list(scale="y", field=as.character(y_var)[2]),
-        x = list(scale="x", field=as.character(x_var)[2]), width = list(scale="x", band=width)
+        y = list(scale="y", value=0), y2 = encode_prop(props[props$encode=='y', ], scale="y"),
+        x = encode_prop(props[props$encode=='x', ], scale="x"), width = list(scale="x", band=width)
       ))
-      g <- add_group_mark(g, type="rect", from = list(data=data_name), encode = e, name=paste0("mark_", id))
+      g <- add_group_mark(g, type="rect", from = list(data=from), encode = e, name=paste0("mark_", id))
       # add group mark to visualization
       vis <- add_mark_(vis, g)
       # v <- layer_rects(v,
@@ -170,13 +141,13 @@ layer_bars2 <- function(vis, ..., data=NULL, group=NULL, stack = TRUE, width = N
       #                  y = 0, y2 = y_var)
     }
     vis <- add_scale_(vis, name="x", type="band", paddingOuter=0, range="width",
-                      domain=list(data=data_name, field=as.character(x_var)[2]),
+                      domain=list(data=from, field=props[props$encode=='x', 'field']),
                       round=TRUE)
-    vis <- add_axis_(vis, scale="x", orient="bottom", title=as.character(y_var)[2])
+    vis <- add_axis_(vis, scale="x", orient="bottom", title=props[props$encode=='x', 'field'])
 
     # vis <- scale_nominal(vis, "x", padding = 1 - width, points = FALSE) # pass-through to ggvis_scale that sets an ordinal scale with a 'nominal' subclass. ('nominal' is set in the 'class' so might be used for specific nominal functions)
 
-  } else {
+  } else { # may end up removing if 'discrete_x' is not necessary
     #TODO: EVERYTHING BELOW
     vis <- layer_f(vis, function(v) {
       # v <- add_props(v, .props = new_props)
@@ -189,7 +160,7 @@ layer_bars2 <- function(vis, ..., data=NULL, group=NULL, stack = TRUE, width = N
           type = "aggregate",
           groupby = group,
           op = "count",
-          as = paste(y_var, "_", id)
+          as = paste(props[props$encode=='y', 'field'], "_", id)
         )
         v <- layer_rects(v, x = ~xmin_, x2 = ~xmax_, y = ~stack_upr_,
                          y2 = ~stack_lwr_)
@@ -201,10 +172,9 @@ layer_bars2 <- function(vis, ..., data=NULL, group=NULL, stack = TRUE, width = N
   }
 
   vis <- add_scale_(vis, name="y", type="linear", range="height",
-                    domain=list(data=data_name, field=as.character(y_var)[2]),
+                    domain=list(data=from, field=props[props$encode=='y', 'field']),
                     round=TRUE)
-  vis <- add_axis_(vis, scale="y", orient="left", title=as.character(y_var)[2])
-  # vis <- scale_numeric(vis, "y", domain = c(0, NA), expand = c(0, 0.05))
+  vis <- add_axis_(vis, scale="y", orient="left", title=props[props$encode=='y', 'field'])
 
   vis
 }
