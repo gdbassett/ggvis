@@ -1,4 +1,6 @@
 # ggvis 0.4.3.9XXX
+* 9017.1: testing aggregate transform in layer_bars2()
+
 * 9017: flip_() working. (I think.  I'm never flipping anything again.)
 
 * 9016.*: Intermediary work on flip_() (for ggvega object())

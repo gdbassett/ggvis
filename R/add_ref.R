@@ -271,7 +271,7 @@ add_transform <- function(vis, name, type, ...) {
                   "wordcloud")
   if (!type %in% transforms) stop(paste0("Type ", type, " is not a valid transform."))
 
-  transform <- eval(paste0("vega_", type, "_transform(type, ...)"))
+  transform <- eval(parse(text=paste0("vega_", type, "_transform(type, ...)")))
 
 
   locs <- c()

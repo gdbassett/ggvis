@@ -233,8 +233,8 @@ is.vega_transform <- function(obj, error=FALSE) {
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^data[.]transform", err$field)) # judge only transform errors
-  if (error) error_helper(err)  # raise error rather than returning as attr
-  attr(ret, 'errors') <- err[grepl("^data[.]transform", err$field), ] # add errors back in
+  if (!ret) attr(ret, 'errors') <- err[grepl("^data[.]transform", err$field), ] # add errors back in
+  if (error) error_helper(attr(ret, 'errors'))  # raise error rather than returning as attr
 
   ret
 }
