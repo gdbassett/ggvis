@@ -6,7 +6,7 @@
 \usage{
 ggvega(data = NULL, ...,
   schema = "https://vega.github.io/schema/vega/v3.0.json",
-  description = NULL, background = NULL, width = NULL, height = NULL,
+  description = NULL, background = NULL, width = 500, height = 309,
   padding = NULL, autosize = "pad", title = NULL)
 }
 \arguments{
