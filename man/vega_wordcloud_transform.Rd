@@ -37,6 +37,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/wordcloud/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **wordcloud** transform computes a word cloud layout, similar to [Wordle](http://www.wordle.net/). The wordcloud transform is intended for visualizing words or phrases with the [text mark type](../../marks/text). This transform uses [Jason Davies' wordcloud implementation](https://www.jasondavies.com/wordcloud/).

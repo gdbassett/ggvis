@@ -18,6 +18,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/geojson/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **geojson** transform consolidates geographic data into a single [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON) feature collection. The generated GeoJSON data can then be used to parameterize other parts of a Vega specification, namely the [projection `fit` parameter](../../projections/). This transform can process both latitude / longitude data and existing GeoJSON features.

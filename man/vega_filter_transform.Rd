@@ -16,6 +16,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/filter/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **filter** transform removes objects from a data stream based on a provided filter expression.

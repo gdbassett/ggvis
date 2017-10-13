@@ -16,6 +16,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/collect/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **collect** transform collects all the objects in a data stream within a single array, allowing sorting by data field values.

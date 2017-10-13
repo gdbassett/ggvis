@@ -20,6 +20,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/geoshape/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **geoshape** transform generates a renderer instance that maps [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON) features to a shape instance that issues drawing commands. It is intended for use solely with the [shape](../../marks/shape) mark type. This transform is similar in functionality to the [geopath](../geopath) transform, but rather than generate intermediate SVG path strings, this transform produces a shape instance that directly generates drawing commands during rendering. This transform can result in improved performance when using canvas rendering for dynamic maps.

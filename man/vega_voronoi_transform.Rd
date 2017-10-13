@@ -25,6 +25,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/voronoi/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **voronoi** transform computes a [voronoi diagram](https://en.wikipedia.org/wiki/Voronoi_diagram) for a set of input points and returns the computed cell paths. The Voronoi cells can then be used to identify the nearest point for a given value. For example, a Voronoi diagram can be used to automatically select the data point closest to the mouse cursor.

@@ -25,6 +25,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/countpattern/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **countpattern** transform counts the number of occurrences of a text pattern, as defined by a regular expression. This transform will iterate through each data object and count all unique pattern matches found within the designated text _field_.

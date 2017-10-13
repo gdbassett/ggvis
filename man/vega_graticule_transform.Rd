@@ -32,6 +32,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/graticule/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **graticule** transform generates a reference grid for cartographic maps. A graticule is a uniform grid of meridians and parallels for showing projection distortion. The default graticule has meridians and parallels every 10° between ±80° latitude; for the polar regions, there are meridians every 90°.

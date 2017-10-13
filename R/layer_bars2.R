@@ -107,19 +107,21 @@ layer_bars2 <- function(vis, ..., from=NULL, group=NULL, stack = TRUE, id=NULL) 
   if (!"y" %in% props$encode) {
     locs <- which(from %in% unlist(purrr::map(vis$vega$data, "name")))
 
-    vis <- add_transform(vis, name = from, "aggregate", groupby=I(props[props$encode=='x', 'field']), groupby=I(props[props$encode=='x', 'field']), ops=I("count"), as=I("count"))
+    vis <- add_transform(vis, name = from, "aggregate", groupby=I(props[props$encode=='x', 'field']), ops=I("count"), as=I("count"))
     props <- rbind(props, data.frame(value=FALSE, encode="y", from=from, field="count"))
   }
 
   if (TRUE) { # used to be 'discrete_x'.  Not sure this is necessary.
     if (!"width" %in% props$encode) {
-      props <- rbind(props, data.frame(value=TRUE, encode="width", from=NA, field=0.9, stringsAsFactors = FALSE))
+      props <- rbind(props, data.frame(value=TRUE, encode="width", from=NA, field=1, stringsAsFactors = FALSE)) # from field=0.9
     }
 
     if (stack || !is.null(group)) {
       e <- vega_encode(update = list(
-        y = list(scale="y", value=0), y2 = encode_prop(props[props$encode=='y', ], scale='y'),
-        x = encode_prop(props[props$encode=='x', ], scale="x"), width = list(scale="x", band=props[props$encode=='width', 'field'])
+        y = list(scale="y", value=0),
+        y2 = encode_prop(props[props$encode=='y', ], scale='y'),
+        x = encode_prop(props[props$encode=='x', ], scale="x"),
+        width = list(scale="x", band=props[props$encode=='width', 'field'])
       ))
       vis <- add_mark_(vis, type="rect", from = list(data=from), encode=e, name=paste0("mark_", id))
     } else {
@@ -140,9 +142,9 @@ layer_bars2 <- function(vis, ..., from=NULL, group=NULL, stack = TRUE, id=NULL) 
       #                  x = x_var, width = band(),
       #                  y = 0, y2 = y_var)
     }
-    vis <- add_scale_(vis, name="x", type="band", paddingOuter=0, range="width",
+    vis <- add_scale_(vis, name="x", type="band", range="width",
                       domain=list(data=from, field=props[props$encode=='x', 'field']),
-                      round=TRUE)
+                      round=TRUE, paddingInner=0.1, paddingOuter=0)
     vis <- add_axis_(vis, scale="x", orient="bottom", title=props[props$encode=='x', 'field'])
 
     # vis <- scale_nominal(vis, "x", padding = 1 - width, points = FALSE) # pass-through to ggvis_scale that sets an ordinal scale with a 'nominal' subclass. ('nominal' is set in the 'class' so might be used for specific nominal functions)

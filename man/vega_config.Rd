@@ -6,7 +6,7 @@
 \usage{
 vega_config(view.autosize = NULL, view.background = NULL,
   view.group = NULL, event = NULL, mark = NULL, style = NULL,
-  axes = NULL, legend = NULL, title = NULL, scale.range = NULL)
+  axis = NULL, legend = NULL, title = NULL, scale.range = NULL)
 }
 \arguments{
 \item{view.autosize}{string or resize object. Default automatic sizing setting.
@@ -44,7 +44,7 @@ Defaults for fill or stroke color will be applied only if neither "fill" nor
   Style settings take precedence over default mark settings, but are overridden by
   the axis, legend, and title properties described below.}
 
-\item{axes}{object. Properties defining default settings for axes. These properties
+\item{axis}{object. Properties defining default settings for axes. These properties
   are defined under the "axis" property in the config object, in which case the
   settings apply to all axes.
   Additional property blocks can target more specific axis types based on the

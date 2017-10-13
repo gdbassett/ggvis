@@ -18,6 +18,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/fold/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **fold** transform collapses (or "folds") one or more data fields into two properties: a _key_ property (containing the original data field name) and a _value_ property (containing the data value). The fold transform is useful for mapping matrix or cross-tabulation data into a standardized format.

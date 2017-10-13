@@ -27,6 +27,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/impute/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **impute** transform performs imputation of missing data objects.

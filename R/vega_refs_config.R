@@ -156,7 +156,7 @@
 #'
 #'   Style settings take precedence over default mark settings, but are overridden by
 #'   the axis, legend, and title properties described below.
-#' @param axes object. Properties defining default settings for axes. These properties
+#' @param axis object. Properties defining default settings for axes. These properties
 #'   are defined under the "axis" property in the config object, in which case the
 #'   settings apply to all axes.
 
@@ -192,25 +192,25 @@ vega_config <- function(
   event  = NULL,
   mark = NULL,
   style = NULL,
-  axes=NULL,
+  axis=NULL,
   legend = NULL,
   title = NULL,
   scale.range = NULL
 ) {
   args <- list(autosize=view.autosize, background=view.background, group=view.group,
-               events=list(defaults=event), mark=mark, style=style, axes=axes, legend=legend, title=title,
+               events=list(defaults=event), mark=mark, style=style, axis=axis, legend=legend, title=title,
                range=scale.range)
   args <- args[!unlist(lapply(args, is.null))]
 
   # move mark properties into root.
-  if ("mark" %in% names(args)) {
-    args <- c(args[names(args) != "mark"], args$mark)
-  }
+  # if ("mark" %in% names(args)) {
+  #   args <- c(args[names(args) != "mark"], args$mark)
+  # }
 
   # move axes properties into root.
-  if ("axes" %in% names(args)) {
-    args <- c(args[names(args) != "axes"], args$axes)
-  }
+  # if ("axes" %in% names(args)) {
+  #   args <- c(args[names(args) != "axes"], args$axes)
+  # }
 
   is.vega_config(args)
 

@@ -30,6 +30,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/linkpath/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **linkpath** transform is used to route a visual link between two nodes. The most common use case is to draw edges in a tree or network layout. By default links are simply straight lines between source and target nodes; however, with additional shape and orientation information, a variety of link paths can be expressed. This transform writes one property to each datum, providing an [SVG path string](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths) for the link path.

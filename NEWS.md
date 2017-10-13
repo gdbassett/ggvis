@@ -1,4 +1,35 @@
 # ggvis 0.4.3.9XXX
+* 9018: aggregate transform in layer_bars2 seems to be working.
+* also various testing and tweaking around figure creation:
+p <- vz %>%
+    filter(plus.dbir_year == 2017, subset.2017dbir) %>%
+    filter(attribute.confidentiality.data_disclosure.Yes) %>%
+    dbirR::getenumCI(“action.hacking.variety”) %>%
+    top_n(10, freq) %>%
+    ggvis::ggvega(x=enum, y=freq) %>%
+    ggvis::layer_bars2() %>%
+    ggvis::add_config(
+        view.autosize=“pad”,
+        mark=list(
+            fill=color_one
+        ),
+        axes=list(
+            ticks=FALSE
+        ),
+        title=list(
+            anchor=“start”
+        )
+    ) %>%
+    ggvis::add_title(text=“Top Hacking varieties in breaches”) %>%
+    ggvis::flip_() # %>%
+    # ggvis::vega_render(tooltip_opts=list(showAllFields=FALSE, fields=list(list(field=“enum”, formatType=“string”), list(field=“x”, title=“Count”, formatType=“number”))))
+p$vega$axes[[1]]$format <- “%”
+p$vega$axes[[1]]$grid <- TRUE
+p$vega$mark[[1]]$update$strokeWidth <- 0
+p$vega$axes[[1]] <- p$vega$axes[[1]][grep(“title”, names(p$vega$axes[[1]]), invert=TRUE)]
+p$vega$axes[[2]] <- p$vega$axes[[2]][grep(“title”, names(p$vega$axes[[2]]), invert=TRUE)]
+p
+
 * 9017.1: testing aggregate transform in layer_bars2()
 
 * 9017: flip_() working. (I think.  I'm never flipping anything again.)

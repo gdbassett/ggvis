@@ -16,6 +16,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/treelinks/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **treelinks** transform generates a new stream of data objects representing links among nodes in a tree. This transform must occur downstream of a tree-generating transform such as [nest](../nest) or [stratify](../stratify). The generated link objects will have `source` and `target` fields that reference input data objects corresponding to parent (source) and child (target) nodes.

@@ -46,6 +46,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/treemap/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **treemap** transform recursively subdivides area into rectangles with areas proportional to each node's associated value.

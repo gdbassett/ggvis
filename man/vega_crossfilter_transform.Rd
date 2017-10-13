@@ -21,6 +21,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/crossfilter/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **crossfilter** transform maintains a filter mask for multiple dimensional queries, using a set of sorted indices. This transform can be used in conjunction with the [resolvefilter](../resolvefilter) transform to enable fast interactive querying over large data sets. This transform is inspired by the [Crossfilter library](http://crossfilter.github.io/crossfilter/) developed by Mike Bostock and collaborators.

@@ -41,6 +41,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/bin/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **bin** transform discretizes numeric values into a set of bins. A common use case is to create a histogram.

@@ -20,6 +20,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/sequence/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **sequence** transform generates a data stream containing a seqence of numeric values. See also the [sequence expression function](../../expressions/#sequence).

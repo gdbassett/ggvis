@@ -4,12 +4,12 @@
 \alias{vega_axis}
 \title{return a vega axis}
 \usage{
-vega_axis(scale, orient, domain = TRUE, encode = NULL, format = NULL,
-  grid = FALSE, gridScale = NULL, labels = TRUE, labelBound = FALSE,
-  labelFlush = NULL, labelPadding = NULL, labelOverlap = FALSE,
-  minExtent = NULL, maxExtent = NULL, offset = NULL, position = 0,
-  ticks = TRUE, tickCount = NULL, tickSize = NULL, title = "",
-  titlePadding = NULL, values = NULL, zindex = 0)
+vega_axis(scale, orient, domain = NULL, encode = NULL, format = NULL,
+  grid = NULL, gridScale = NULL, labels = NULL, labelBound = NULL,
+  labelFlush = NULL, labelPadding = NULL, labelOverlap = NULL,
+  minExtent = NULL, maxExtent = NULL, offset = NULL, position = NULL,
+  ticks = NULL, tickCount = NULL, tickSize = NULL, title = NULL,
+  titlePadding = NULL, values = NULL, zindex = NULL)
 }
 \arguments{
 \item{scale}{String  Required. The name of the scale backing the axis component.}

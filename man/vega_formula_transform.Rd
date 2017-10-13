@@ -20,6 +20,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/formula/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **formula** transform extends data objects with new values according to a calculation formula.

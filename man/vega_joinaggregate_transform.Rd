@@ -23,6 +23,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/joinaggregate/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **joinaggregate** transform extends the input data objects with aggregate values. Aggregation is performed and the results are then joined with the input data. The parameters for this transform are nearly identical to the [`aggregate`](../aggregate) transform, but rather than creating new output objects, the results are written back to each of the input data objects. This transform can be helpful for creating derived values that combine both raw data and aggregate calculations, such as percentages of group totals.

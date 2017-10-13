@@ -21,7 +21,7 @@ HTMLWidgets.widget({
           .renderer(x.renderer)  // set renderer (canvas or svg)
           .hover()             // enable hover encode set processing
           .run();             // run the dataflow and render the view
-
+        console.log(x.tooltip_options); // DEBUG
         if (Object.keys(x.tooltip_options).length > 0) {
           vegaTooltip.vega(v, x.tooltip_options);
         } else {

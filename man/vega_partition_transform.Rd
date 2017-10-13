@@ -27,6 +27,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/partition/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **partition** transform computes the layout for an adjacency diagram: a space-filling variant of a node-link tree diagram. Rather than drawing a link between parent and child in the hierarchy, nodes are drawn as solid areas (either arcs or rectangles), and their placement relative to other nodes reveals their position in the hierarchy. The size of the nodes encodes a quantitative dimension that might be difficult to convey in a node-link diagram.

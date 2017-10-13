@@ -18,6 +18,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/stratify/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **stratify** transform generates a hierarchical (tree) data structure from input data objects, based on key fields that match parent and children nodes. Internally, this transform generates a set of tree node objects that can then be processed by tree layout methods such as [tree](../tree), [treemap](../treemap), [pack](../pack), and [partition](../partition).

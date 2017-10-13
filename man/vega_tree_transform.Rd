@@ -27,6 +27,7 @@ a transform object
 }
 \description{
 https://vega.github.io/vega/docs/transforms/tree/index.html
+NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
 }
 \details{
 The **tree** transform computes a node-link diagram layout for hierarchical data. It supports both _cluster_ layouts (for example to create [dendrograms](http://en.wikipedia.org/wiki/Dendrogram)) and _tidy_ layouts (using the method of [Rheingold & Tilford](http://emr.cs.iit.edu/~reingold/tidier-drawings.pdf), as later corrected by [Buchheim _et al._](http://dirk.jivas.de/papers/buchheim02improving.pdf)). The coordinates `x` and `y` produced by the layout represent an arbitrary coordinate system; for example, you can treat x as an angle and y as a radius to produce a radial layout.
