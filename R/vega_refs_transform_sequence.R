@@ -1,6 +1,8 @@
 #' create a vega sequence transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/sequence/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #' 
 #' The **sequence** transform generates a data stream containing a seqence of numeric values. See also the [sequence expression function](../../expressions/#sequence).
 #' 
@@ -17,7 +19,7 @@ vega_sequence_transform <- function(
   stop=NULL,
   step=NULL
 ) {
-  args <- list(start=start, stop=stop, step=step)
+  args <- list(type=type, start=start, stop=stop, step=step)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)

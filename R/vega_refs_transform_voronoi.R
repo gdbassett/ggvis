@@ -1,6 +1,8 @@
 #' create a vega voronoi transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/voronoi/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #' 
 #' The **voronoi** transform computes a [voronoi diagram](https://en.wikipedia.org/wiki/Voronoi_diagram) for a set of input points and returns the computed cell paths. The Voronoi cells can then be used to identify the nearest point for a given value. For example, a Voronoi diagram can be used to automatically select the data point closest to the mouse cursor.
 #' 
@@ -21,7 +23,7 @@ vega_voronoi_transform <- function(
   size=NULL,
   as=NULL
 ) {
-  args <- list(x=x, y=y, extent=extent, size=size, as=as)
+  args <- list(type=type, x=x, y=y, extent=extent, size=size, as=as)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)

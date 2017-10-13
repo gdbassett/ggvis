@@ -1,6 +1,8 @@
 #' create a vega treemap transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/treemap/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #' 
 #' The **treemap** transform recursively subdivides area into rectangles with areas proportional to each node's associated value.
 #' 
@@ -41,7 +43,7 @@ vega_treemap_transform <- function(
   size=NULL,
   as=NULL
 ) {
-  args <- list(field=field, sort=sort, method=method, padding=padding, paddingInner=paddingInner, paddingOuter=paddingOuter, paddingTop=paddingTop, paddingRight=paddingRight, paddingBottom=paddingBottom, paddingLeft=paddingLeft, ratio=ratio, round=round, size=size, as=as)
+  args <- list(type=type, field=field, sort=sort, method=method, padding=padding, paddingInner=paddingInner, paddingOuter=paddingOuter, paddingTop=paddingTop, paddingRight=paddingRight, paddingBottom=paddingBottom, paddingLeft=paddingLeft, ratio=ratio, round=round, size=size, as=as)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)

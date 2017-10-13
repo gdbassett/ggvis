@@ -1,6 +1,8 @@
 #' create a vega pack transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/pack/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #' 
 #' The **pack** transform computes an enclosure diagram that uses containment (nesting) to represent a hierarchy. The size of the leaf circles encodes a quantitative dimension of the data. The enclosing circles show the approximate cumulative size of each subtree, but due to wasted space there is some distortion; only the leaf nodes can be compared accurately.
 #' 
@@ -25,7 +27,7 @@ vega_pack_transform <- function(
   padding=NULL,
   as=NULL
 ) {
-  args <- list(field=field, sort=sort, size=size, radius=radius, padding=padding, as=as)
+  args <- list(type=type, field=field, sort=sort, size=size, radius=radius, padding=padding, as=as)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)

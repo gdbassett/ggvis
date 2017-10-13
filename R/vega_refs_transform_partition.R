@@ -1,6 +1,8 @@
 #' create a vega partition transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/partition/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #' 
 #' The **partition** transform computes the layout for an adjacency diagram: a space-filling variant of a node-link tree diagram. Rather than drawing a link between parent and child in the hierarchy, nodes are drawn as solid areas (either arcs or rectangles), and their placement relative to other nodes reveals their position in the hierarchy. The size of the nodes encodes a quantitative dimension that might be difficult to convey in a node-link diagram.
 #' 
@@ -25,7 +27,7 @@ vega_partition_transform <- function(
   size=NULL,
   as=NULL
 ) {
-  args <- list(field=field, sort=sort, padding=padding, round=round, size=size, as=as)
+  args <- list(type=type, field=field, sort=sort, padding=padding, round=round, size=size, as=as)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)

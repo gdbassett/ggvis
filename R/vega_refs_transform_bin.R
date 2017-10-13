@@ -1,6 +1,8 @@
 #' create a vega bin transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/bin/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #' 
 #' The **bin** transform discretizes numeric values into a set of bins. A common use case is to create a histogram.
 #' 
@@ -35,7 +37,7 @@ vega_bin_transform <- function(
   signal=NULL,
   as=NULL
 ) {
-  args <- list(field=field, extent=extent, anchor=anchor, maxbins=maxbins, base=base, step=step, steps=steps, minstep=minstep, divide=divide, nice=nice, signal=signal, as=as)
+  args <- list(type=type, field=field, extent=extent, anchor=anchor, maxbins=maxbins, base=base, step=step, steps=steps, minstep=minstep, divide=divide, nice=nice, signal=signal, as=as)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)

@@ -1,6 +1,8 @@
 #' create a vega geojson transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/geojson/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #' 
 #' The **geojson** transform consolidates geographic data into a single [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON) feature collection. The generated GeoJSON data can then be used to parameterize other parts of a Vega specification, namely the [projection `fit` parameter](../../projections/). This transform can process both latitude / longitude data and existing GeoJSON features.
 #' 
@@ -15,7 +17,7 @@ vega_geojson_transform <- function(
   fields=NULL,
   geojson=NULL
 ) {
-  args <- list(fields=fields, geojson=geojson)
+  args <- list(type=type, fields=fields, geojson=geojson)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)

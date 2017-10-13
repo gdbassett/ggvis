@@ -1,6 +1,8 @@
 #' create a vega density transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/density/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #' 
 #' The **density** transform generates a new data stream of uniformly-spaced samples drawn from a one-dimensional [probability density function (pdf)](https://en.wikipedia.org/wiki/Probability_density_function) or [cumulative distribution function (cdf)](https://en.wikipedia.org/wiki/Cumulative_distribution_function). This transform is useful for representing probability distributions and generating continuous distributions from discrete samples using [kernel density estimation](https://en.wikipedia.org/wiki/Kernel_density_estimation).
 #' 
@@ -21,7 +23,7 @@ vega_density_transform <- function(
   steps=NULL,
   as=NULL
 ) {
-  args <- list(distribution=distribution, extent=extent, method=method, steps=steps, as=as)
+  args <- list(type=type, distribution=distribution, extent=extent, method=method, steps=steps, as=as)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)

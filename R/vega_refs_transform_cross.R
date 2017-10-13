@@ -1,6 +1,8 @@
 #' create a vega cross transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/cross/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #' 
 #' The **cross** transform compute the cross-product of a data stream with itself.
 #' 
@@ -15,7 +17,7 @@ vega_cross_transform <- function(
   filter=NULL,
   as=NULL
 ) {
-  args <- list(filter=filter, as=as)
+  args <- list(type=type, filter=filter, as=as)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)

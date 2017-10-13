@@ -1,6 +1,8 @@
 #' create a vega contour transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/contour/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #' 
 #' The **contour** transform models a spatial distribution of data values using a set of discrete levels. Each [contour line](https://en.wikipedia.org/wiki/Contour_line) is an isoline of constant value. A common use case is to convey density estimates for 2D point data, as these can provide a more scalable representation for large numbers of data points.
 #' 
@@ -31,7 +33,7 @@ vega_contour_transform <- function(
   count=NULL,
   nice=NULL
 ) {
-  args <- list(size=size, values=values, x=x, y=y, cellSize=cellSize, bandwidth=bandwidth, thresholds=thresholds, count=count, nice=nice)
+  args <- list(type=type, size=size, values=values, x=x, y=y, cellSize=cellSize, bandwidth=bandwidth, thresholds=thresholds, count=count, nice=nice)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)

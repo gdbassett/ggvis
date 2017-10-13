@@ -1,6 +1,8 @@
 #' create a vega filter transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/filter/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #' 
 #' The **filter** transform removes objects from a data stream based on a provided filter expression.
 #' 
@@ -13,7 +15,7 @@ vega_filter_transform <- function(
   type,
   expr=NULL
 ) {
-  args <- list(expr=expr)
+  args <- list(type=type, expr=expr)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)

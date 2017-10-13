@@ -1,6 +1,8 @@
 #' create a vega countpattern transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/countpattern/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #'
 #' The **countpattern** transform counts the number of occurrences of a text pattern, as defined by a regular expression. This transform will iterate through each data object and count all unique pattern matches found within the designated text _field_.
 #'
@@ -23,7 +25,7 @@ vega_countpattern_transform <- function(
   stopwords=NULL,
   as=NULL
 ) {
-  args <- list(field=field, pattern=pattern, case=case, stopwords=stopwords, as=as)
+  args <- list(type=type, field=field, pattern=pattern, case=case, stopwords=stopwords, as=as)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)

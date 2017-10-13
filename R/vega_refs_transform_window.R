@@ -1,6 +1,8 @@
 #' create a vega window transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/window/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #' 
 #' The **window** transform performs calculations over sorted groups of data objects. These calculations including ranking, lead/lag analysis, and aggregates such as running sums and averages. Calculated values are written back to the input data stream.
 #' 
@@ -27,7 +29,7 @@ vega_window_transform <- function(
   frame=NULL,
   ignorePeers=NULL
 ) {
-  args <- list(sort=sort, groupby=groupby, ops=ops, fields=fields, params=params, as=as, frame=frame, ignorePeers=ignorePeers)
+  args <- list(type=type, sort=sort, groupby=groupby, ops=ops, fields=fields, params=params, as=as, frame=frame, ignorePeers=ignorePeers)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)

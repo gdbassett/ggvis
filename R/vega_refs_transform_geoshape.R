@@ -1,6 +1,8 @@
 #' create a vega geoshape transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/geoshape/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #' 
 #' The **geoshape** transform generates a renderer instance that maps [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON) features to a shape instance that issues drawing commands. It is intended for use solely with the [shape](../../marks/shape) mark type. This transform is similar in functionality to the [geopath](../geopath) transform, but rather than generate intermediate SVG path strings, this transform produces a shape instance that directly generates drawing commands during rendering. This transform can result in improved performance when using canvas rendering for dynamic maps.
 #' 
@@ -19,7 +21,7 @@ vega_geoshape_transform <- function(
   field=NULL,
   as=NULL
 ) {
-  args <- list(projection=projection, field=field, as=as)
+  args <- list(type=type, projection=projection, field=field, as=as)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)

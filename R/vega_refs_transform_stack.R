@@ -1,6 +1,8 @@
 #' create a vega stack transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/stack/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #' 
 #' The **stack** transform computes a layout by stacking groups of values. The most common use case is to create stacked graphs, including stacked bar charts and stream graphs. This transform writes two properties to each datum, indicating the starting and ending stack values.
 #' 
@@ -21,7 +23,7 @@ vega_stack_transform <- function(
   offset=NULL,
   as=NULL
 ) {
-  args <- list(field=field, groupby=groupby, sort=sort, offset=offset, as=as)
+  args <- list(type=type, field=field, groupby=groupby, sort=sort, offset=offset, as=as)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)

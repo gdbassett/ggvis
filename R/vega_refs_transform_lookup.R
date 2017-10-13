@@ -1,6 +1,8 @@
 #' create a vega lookup transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/lookup/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #' 
 #' The **lookup** transform extends a primary data stream by looking up values on a secondary data stream. Lookup accepts one or more key fields from the primary data stream, each of which are then searched for in a single key field of the secondary data stream.
 #' 
@@ -25,7 +27,7 @@ vega_lookup_transform <- function(
   as=NULL,
   default=NULL
 ) {
-  args <- list(from=from, key=key, values=values, fields=fields, as=as, default=default)
+  args <- list(type=type, from=from, key=key, values=values, fields=fields, as=as, default=default)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)

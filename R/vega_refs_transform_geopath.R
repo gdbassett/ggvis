@@ -1,6 +1,8 @@
 #' create a vega geopath transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/geopath/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #' 
 #' The **geopath** transform maps [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON) features to [SVG path strings](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths) according to a provided cartographic [projection](../../projections). It is intended for use with the [path](../../marks/path) mark type. This transform is similar in functionality to the [geoshape](../geoshape) transform, but immediately generates SVG path strings, rather than producing a shape instance that delays projection until the rendering stage. The [geoshape](../geoshape) transform may have better performance for the case of canvas-rendered dynamic maps.
 #' 
@@ -19,7 +21,7 @@ vega_geopath_transform <- function(
   field=NULL,
   as=NULL
 ) {
-  args <- list(projection=projection, field=field, as=as)
+  args <- list(type=type, projection=projection, field=field, as=as)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)

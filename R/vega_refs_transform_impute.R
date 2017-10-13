@@ -1,6 +1,8 @@
 #' create a vega impute transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/impute/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #' 
 #' The **impute** transform performs imputation of missing data objects.
 #' 
@@ -23,7 +25,7 @@ vega_impute_transform <- function(
   groupby=NULL,
   value=NULL
 ) {
-  args <- list(field=field, key=key, keyvals=keyvals, method=method, groupby=groupby, value=value)
+  args <- list(type=type, field=field, key=key, keyvals=keyvals, method=method, groupby=groupby, value=value)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)

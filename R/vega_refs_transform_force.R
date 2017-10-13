@@ -1,6 +1,8 @@
 #' create a vega force transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/force/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #' 
 #' The **force** transform computes a force-directed layout. Force-directed layout uses a model in which data objects act as charged particles (or _nodes_), optionally connected by a set of edges (or _links_). A set of forces are used to drive a physics simulation that determines the node positions. This transform uses the [d3-force](https://github.com/d3/d3-force) module.
 #' 
@@ -36,7 +38,7 @@ vega_force_transform <- function(
   forces=NULL,
   as=NULL
 ) {
-  args <- list(static=static, restart=restart, iterations=iterations, alpha=alpha, alphaMin=alphaMin, alphaTarget=alphaTarget, velocityDecay=velocityDecay, forces=forces, as=as)
+  args <- list(type=type, static=static, restart=restart, iterations=iterations, alpha=alpha, alphaMin=alphaMin, alphaTarget=alphaTarget, velocityDecay=velocityDecay, forces=forces, as=as)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)

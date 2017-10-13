@@ -1,6 +1,8 @@
 #' create a vega nest transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/nest/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #' 
 #' The **nest** transform generates a hierarchical (tree) data structure from input data objects, based on dividing children into groups based on distinct field values. Internally, this transform generates a set of tree node objects that can then be processed by tree layout methods such as [tree](../tree), [treemap](../treemap), [pack](../pack), and [partition](../partition).
 #' 
@@ -17,7 +19,7 @@ vega_nest_transform <- function(
   keys=NULL,
   key=NULL
 ) {
-  args <- list(generate=generate, keys=keys, key=key)
+  args <- list(type=type, generate=generate, keys=keys, key=key)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)

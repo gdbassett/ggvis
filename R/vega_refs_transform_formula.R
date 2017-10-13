@@ -1,6 +1,8 @@
 #' create a vega formula transform object
 #'
 #' https://vega.github.io/vega/docs/transforms/formula/index.html
+#' NOTE: Some parameters are required to be 'arrays'.  In the case where a parameter must be an array but is a single line, wrap it in 'I()', (asis), to ensure it is properly handled.
+#'
 #' 
 #' The **formula** transform extends data objects with new values according to a calculation formula.
 #' 
@@ -17,7 +19,7 @@ vega_formula_transform <- function(
   as=NULL,
   initonly=NULL
 ) {
-  args <- list(expr=expr, as=as, initonly=initonly)
+  args <- list(type=type, expr=expr, as=as, initonly=initonly)
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_transform(args, error=TRUE)
