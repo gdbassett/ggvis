@@ -30,8 +30,8 @@ is.vega_title <- function(obj, error=FALSE) {
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^title", err$field)) # judge only title errors
-  if (error) error_helper(err) # raise error rather than returning as attr
-  attr(ret, 'errors') <- err[grepl("^title", err$field), ] # add errors back in
+  if (!ret) attr(ret, 'errors') <- err[grepl("^title", err$field), ] # add errors back in
+  if (error) error_helper(attr(ret, 'errors')) # raise error rather than returning as attr
   ret
 }
 
@@ -47,8 +47,8 @@ is.vega_config <- function(obj, error=FALSE) {
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^config", err$field)) # judge only config errors
-  if (error) error_helper(err) # raise error rather than returning as attr
-  attr(ret, 'errors') <- err[grepl("^config", err$field), ] # add errors back in
+  if (!ret) attr(ret, 'errors') <- err[grepl("^config", err$field), ] # add errors back in
+  if (error) error_helper(attr(ret, 'errors')) # raise error rather than returning as attr
   ret
 }
 
@@ -64,8 +64,8 @@ is.vega_mark <- function(obj, error=FALSE) {
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^mark", err$field)) # judge only mark errors
-  if (error) error_helper(err)  # raise error rather than returning as attr
-  attr(ret, 'errors') <- err[grepl("^mark", err$field), ] # add errors back in
+  if (!ret) attr(ret, 'errors') <- err[grepl("^mark", err$field), ] # add errors back in
+  if (error) error_helper(attr(ret, 'errors'))  # raise error rather than returning as attr
 
   ret
 }
@@ -83,8 +83,8 @@ is.vega_encode <- function(obj, error=FALSE) {
   # TODO: The validation line below doesn't seem to be validating (or maybe the schema is too lax) - 171005
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("encode", err$field)) # judge only mark errors
-  if (error) error_helper(err)  # raise error rather than returning as attr
-  attr(ret, 'errors') <- err[grepl("encode", err$field), ] # add errors back in #TODO
+  if (!ret) attr(ret, 'errors') <- err[grepl("^encode", err$field), ] # add errors back in
+  if (error) error_helper(attr(ret, 'errors'))  # raise error rather than returning as attr
 
   ret
 }
@@ -101,8 +101,8 @@ is.vega_scale <- function(obj, error=FALSE) {
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^scales", err$field)) # judge only mark errors
-  if (error) error_helper(err)  # raise error rather than returning as attr
-  attr(ret, 'errors') <- err[grepl("^scales", err$field), ] # add errors back in
+  if (!ret) attr(ret, 'errors') <- err[grepl("^scales", err$field), ] # add errors back in
+  if (error) error_helper(attr(ret, 'errors'))  # raise error rather than returning as attr
 
   ret
 }
@@ -119,8 +119,8 @@ is.vega_axis <- function(obj, error=FALSE) {
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^axes", err$field)) # judge only axis errors
-  if (error) error_helper(err)  # raise error rather than returning as attr
-  attr(ret, 'errors') <- err[grepl("^axes", err$field), ] # add errors back in
+  if (!ret) attr(ret, 'errors') <- err[grepl("^axes", err$field), ] # add errors back in
+  if (error) error_helper(attr(ret, 'errors'))  # raise error rather than returning as attr
 
   ret
 }
@@ -138,8 +138,8 @@ is.vega_signal <- function(obj, error=FALSE) {
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^signals", err$field)) # judge only signals errors
-  if (error) error_helper(err)  # raise error rather than returning as attr
-  attr(ret, 'errors') <- err[grepl("^signals", err$field), ] # add errors back in
+  if (!ret) attr(ret, 'errors') <- err[grepl("^signals", err$field), ] # add errors back in
+  if (error) error_helper(attr(ret, 'errors'))  # raise error rather than returning as attr
 
   ret
 }
@@ -157,8 +157,8 @@ is.vega_event <- function(obj, error=FALSE) {
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^signals[.]on", err$field)) # judge only event errors
-  if (error) error_helper(err)  # raise error rather than returning as attr
-  attr(ret, 'errors') <- err[grepl("^signals[.]on", err$field), ] # add errors back in
+  if (!ret) attr(ret, 'errors') <- err[grepl("^signals[.]on", err$field), ] # add errors back in
+  if (error) error_helper(attr(ret, 'errors'))  # raise error rather than returning as attr
 
   ret
 }
@@ -176,8 +176,8 @@ is.vega_input <- function(obj, error=FALSE) {
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^signals[.]bind", err$field)) # judge only input errors
-  if (error) error_helper(err)  # raise error rather than returning as attr
-  attr(ret, 'errors') <- err[grepl("^signals[.]bind", err$field), ] # add errors back in
+  if (!ret) attr(ret, 'errors') <- err[grepl("^signals[.]bind", err$field), ] # add errors back in
+  if (error) error_helper(attr(ret, 'errors'))  # raise error rather than returning as attr
 
   ret
 }
@@ -195,8 +195,8 @@ is.vega_legend <- function(obj, error=FALSE) {
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^legends", err$field)) # judge only legend errors
-  if (error) error_helper(err)  # raise error rather than returning as attr
-  attr(ret, 'errors') <- err[grepl("^legends", err$field), ] # add errors back in
+  if (!ret) attr(ret, 'errors') <- err[grepl("^legends", err$field), ] # add errors back in
+  if (error) error_helper(attr(ret, 'errors'))  # raise error rather than returning as attr
 
   ret
 }
@@ -214,8 +214,8 @@ is.vega_projection <- function(obj, error=FALSE) {
   schema <- readr::read_file( system.file("www/lib/vega/v3.0.json", package="ggvis") )
   err <- attr(jsonvalidate::json_validate(spec, schema, verbose=TRUE, greedy=TRUE), 'errors') # get errors
   ret <- !any(grepl("^projections", err$field)) # judge only projection errors
-  if (error) error_helper(err)  # raise error rather than returning as attr
-  attr(ret, 'errors') <- err[grepl("^projections", err$field), ] # add errors back in
+  if (!ret) attr(ret, 'errors') <- err[grepl("^projections", err$field), ] # add errors back in
+  if (error) error_helper(attr(ret, 'errors'))  # raise error rather than returning as attr
 
   ret
 }

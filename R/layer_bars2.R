@@ -107,7 +107,7 @@ layer_bars2 <- function(vis, ..., from=NULL, group=NULL, stack = TRUE, id=NULL) 
   if (!"y" %in% props$encode) {
     locs <- which(from %in% unlist(purrr::map(vis$vega$data, "name")))
 
-    vis <- add_transform(vis, name = from, "aggregate", groupby=props[props$encode=='x', 'field'], ops="count", as="count")
+    vis <- add_transform(vis, name = from, "aggregate", groupby=I(props[props$encode=='x', 'field']), groupby=I(props[props$encode=='x', 'field']), ops=I("count"), as=I("count"))
     props <- rbind(props, data.frame(value=FALSE, encode="y", from=from, field="count"))
   }
 
