@@ -13,7 +13,7 @@ add_transform(vis, name, type, ...)
 
 \item{type}{string type of transform to add}
 
-\item{...}{vega transform properties}
+\item{...}{arguments to transforms}
 }
 \value{
 a ggvis object

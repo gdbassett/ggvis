@@ -9,7 +9,32 @@ add_axis_(vis, ...)
 \arguments{
 \item{vis}{a ggvis object}
 
-\item{...}{vega axis properties}
+\item{...}{Arguments passed on to \code{vega_axis}
+\describe{
+  \item{scale}{String  Required. The name of the scale backing the axis component.}
+  \item{orient}{String  Required. The orientation of the axis. See the axis orientation reference.}
+  \item{domain}{Boolean A boolean flag indicating if the domain (the axis baseline) should be included as part of the axis (default true).}
+  \item{encode}{Object  Optional mark encodings for custom axis styling. Supports encoding blocks for axis, ticks, labels, grid, and domain. See custom axis encodings.}
+  \item{format}{String  The format specifier pattern for axis labels. For numerical values, must be a legal d3-format specifier. For date-time values, must be a legal d3-time-format specifier.}
+  \item{grid}{Boolean A boolean flag indicating if grid lines should be included as part of the axis (default false).}
+  \item{gridScale}{String  The name of the scale to use for including grid lines. By default grid lines are driven by the same scale as the ticks and labels.}
+  \item{labels}{Boolean A boolean flag indicating if labels should be included as part of the axis (default true).}
+  \item{labelBound}{Boolean | Number  Indicates if labels should be hidden if they exceed the axis range. If false (the default) no bounds overlap analysis is performed. If true, labels will be hidden if they exceed the axis range by more than 1 pixel. If this property is a number, it specifies the pixel tolerance: the maximum amount by which a label bounding box may exceed the axis range.}
+  \item{labelFlush}{Boolean | Number  Indicates if the first and last axis labels should be aligned flush with the scale range. Flush alignment for a horizontal axis will left-align the first label and right-align the last label. For vertical axes, bottom and top text baselines are applied instead. If this property is a number, it also indicates the number of pixels by which to offset the first and last labels; for example, a value of 2 will flush-align the first and last labels and also push them 2 pixels outward from the center of the axis. The additional adjustment can sometimes help the labels better visually group with corresponding axis ticks.}
+  \item{labelPadding}{Number  The padding in pixels between labels and ticks.}
+  \item{labelOverlap}{Boolean | String  The strategy to use for resolving overlap of axis labels. If false (the default), no overlap reduction is attempted. If set to true or "parity", a strategy of removing every other label is used (this works well for standard linear axes). If set to "greedy", a linear scan of the labels is performed, removing any labels that overlaps with the last visible label (this often works better for log-scaled axes).}
+  \item{minExtent}{Number | Value  The minimum extent in pixels that axis ticks and labels should use. This determines a minimum offset value for axis titles.}
+  \item{maxExtent}{Number | Value  The maximum extent in pixels that axis ticks and labels should use. This determines a maximum offset value for axis titles.}
+  \item{offset}{Number | Value  The orthogonal offset in pixels by which to displace the axis from its position along the edge of the chart.}
+  \item{position}{Number | Value  The anchor position of the axis in pixels (default 0). For x-axes with top or bottom orientation, this sets the axis group x coordinate. For y-axes with left or right orientation, this sets the axis group y coordinate.}
+  \item{ticks}{Boolean A boolean flag indicating if ticks should be included as part of the axis (default true).}
+  \item{tickCount}{Number | String | Object  A desired number of ticks, for axes visualizing quantitative scales. The resulting number may be different so that values are “nice” (multiples of 2, 5, 10) and lie within the underlying scale’s range. For scales of type time or utc, the tick count can instead be a time interval specifier. Legal string values are "millisecond", "second", "minute", "hour", "day", "week", "month", and "year". Alternatively, an object-valued interval specifier of the form {"interval": "month", "step": 3} includes a desired number of interval steps. Here, ticks are generated for each quarter (Jan, Apr, Jul, Oct) boundary.}
+  \item{tickSize}{Number  The size in pixels of axis ticks.}
+  \item{title}{String  A title for the axis (none by default).}
+  \item{titlePadding}{Number | Value  The offset in pixels between the axis labels and axis title.}
+  \item{values}{Array Explicitly set the visible axis tick and label values.}
+  \item{zindex}{Number  The integer z-index indicating the layering of the axis group relative to other axis, mark and legend groups. The default value is 0 and axes and grid lines are drawn behind any marks defined in the same specification level. Higher values (1) will cause axes and grid lines to be drawn on top of marks.}
+}}
 }
 \value{
 a ggvis object

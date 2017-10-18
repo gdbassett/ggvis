@@ -9,7 +9,64 @@ add_config(vis, ...)
 \arguments{
 \item{vis}{a ggvis object}
 
-\item{...}{vega config properties}
+\item{...}{Arguments passed on to \code{vega_config}
+\describe{
+  \item{view.autosize}{string or resize object. Default automatic sizing setting.
+Valid string values are "pad", "fit" or "none". See the autosize documentation
+for more.}
+  \item{view.background}{color. Background color of the view component, or null for
+transparent.}
+  \item{view.group}{object. Default properties for the top-level group mark
+representing the data rectangle of a chart. Valid properties of this object are
+mark properties such as "fill", "stroke" and "strokeWidth".}
+  \item{event}{object. An object describing which events that originate within the
+Vega view should have their default behavior suppressed by invoking the
+event.preventDefault method. The defaults object should have a single
+property: either "prevent" (to indicate which events should have default behavior
+suppressed) or "allow" (to indicate only those events whose default behavior
+should be allowed). This property accepts either a boolean value (to prevent/allow
+all events) or an array of event type strings.}
+  \item{mark}{object. Properties defining default property values for each mark type.
+These properties are defined within blocks with names matching a valid mark type
+(e.g., "area", "line", "rect"). The valid properties within each block consist of
+the legal mark properties (e.g., "fill", "stroke", "size", "font"). Global defaults
+for all mark types can be set using the "mark" property.
+Defaults for fill or stroke color will be applied only if neither "fill" nor
+"stroke" are defined in the Vega spec.}
+  \item{style}{object. In addition to the default mark properties above, default
+  values can be further customized using named styles defined under the style block
+  in the config. Styles can then be invoked by including a style directive within a
+  mark definition.
+
+  Style settings take precedence over default mark settings, but are overridden by
+  the axis, legend, and title properties described below.}
+  \item{axis}{object. Properties defining default settings for axes. These properties
+  are defined under the "axis" property in the config object, in which case the
+  settings apply to all axes.
+  Additional property blocks can target more specific axis types based on the
+  orientation ("axisX", "axisY", "axisLeft", "axisTop", etc.) or band scale type
+  ("axisBand"). For example, properties defined under the "axisBand" property will
+  only apply to axes visualizing "band" scales. If multiple axis config blocks apply
+  to a single axis, type-based options take precedence over orientation-based options,
+  which in turn take precedence over general options.
+
+  See details for a list of params.}
+  \item{legend}{object. Properties defining default settings for legends. These
+  properties are defined under the "legend" property within the config object.
+
+  See details for a list of params}
+  \item{title}{object. Properties defining default settings for titles. These properties
+  are defined under the "title" property within the config object.
+
+  See details for a list of params}
+  \item{scale.range}{object. Properties defining named range arrays that can be used
+  within scale range definitions (such as `{"type": "ordinal", "range": "category"}`).
+  These properties are defined under the `"range"` property in the config object.
+
+  Object-valued properties must be legal [scale range](../scales/#range) definitions.
+
+  See details for a list of params}
+}}
 }
 \value{
 a ggvis object

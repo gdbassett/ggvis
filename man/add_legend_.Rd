@@ -9,7 +9,27 @@ add_legend_(vis, ...)
 \arguments{
 \item{vis}{a ggvis object}
 
-\item{...}{vega legend properties}
+\item{...}{Arguments passed on to \code{vega_legend}
+\describe{
+  \item{type}{String The type of legend to include. One of symbol (the default) for discrete symbol legends, or gradient for a continuous color gradient. If gradient is used only the fill or stroke scale parameters are considered.}
+  \item{orient}{String The orientation of the legend, determining where the legend is placed relative to a chart’s data rectangle (default right). See the legend orientation reference.}
+  \item{fill}{String The name of a scale that maps to a fill color.}
+  \item{opacity}{String The name of a scale that maps to an opacity value.}
+  \item{shape}{String The name of a scale that maps to a shape value.}
+  \item{size}{String The name of a scale that maps to a size (area) value.}
+  \item{stroke}{String The name of a scale that maps to a stroke color.}
+  \item{strokeDash}{String The name of a scale that maps to a stroke dash value.}
+  \item{encode}{Object Optional mark encodings for custom legend styling. Supports encoding blocks for legend, title, labels, symbols and gradient. See custom legend encodings.}
+  \item{entryPadding}{Number | Value The padding between entries in a symbol legend.}
+  \item{format}{String The format specifier pattern for legend labels. For numerical values, must be a legal d3-format specifier. For date-time values, must be a legal d3-time-format specifier.}
+  \item{offset}{Number | Value The offset in pixels by which to displace the legend from the data rectangle and axes.}
+  \item{padding}{Number | Value The padding between the border and content of the legend group.}
+  \item{tickCount}{Number | String | Object The desired number of tick values for quantitative legends. For scales of type time or utc, the tick count can instead be a time interval specifier. Legal string values are "millisecond", "second", "minute", "hour", "day", "week", "month", and "year". Alternatively, an object-valued interval specifier of the form {"interval": "month", "step": 3} includes a desired number of interval steps. Here, ticks are generated for each quarter (Jan, Apr, Jul, Oct) boundary.}
+  \item{titlePadding}{Number | Value The padding between the legend title and entries.}
+  \item{title}{String The title for the legend (none by default).}
+  \item{values}{Array Explicitly set the visible legend values.}
+  \item{zindex}{Number The integer z-index indicating the layering of the legend group relative to other axis, mark and legend groups. The default value is 0.}
+}}
 }
 \value{
 a ggvis object

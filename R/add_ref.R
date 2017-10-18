@@ -2,7 +2,7 @@
 #'
 #' @rdname vega_title
 #' @param vis a ggvis object
-#' @param ... vega title properties
+#' @inheritDotParams vega_title
 #' @return a ggvis object
 #' @export
 add_title <- function(vis, ...) {
@@ -13,7 +13,7 @@ add_title <- function(vis, ...) {
 #' Add a config section to a vega plot
 #'
 #' @param vis a ggvis object
-#' @param ... vega config properties
+#' @inheritDotParams vega_config
 #' @return a ggvis object
 #' @export
 add_config <- function(vis, ...) {
@@ -24,7 +24,7 @@ add_config <- function(vis, ...) {
 #' Add a mark
 #'
 #' @param vis a ggvis object
-#' @param ... vega mark properties
+#' @inheritDotParams vega_mark
 #' @return a ggvis object
 #' @export
 add_mark_ <- function(vis, ...) {
@@ -54,7 +54,7 @@ add_mark_ <- function(vis, ...) {
 #' Add a group mark
 #'
 #' @param group_mark a mark object object
-#' @param ... vega mark properties
+#' @inheritDotParams vega_mark
 #' @return a ggvis object
 #' @export
 add_group_mark <- function(group_mark, ...) {
@@ -84,7 +84,7 @@ add_group_mark <- function(group_mark, ...) {
 #' Add a scale
 #'
 #' @param vis a ggvis object
-#' @param ... vega scale properties
+#' @inheritDotParams vega_scale
 #' @return a ggvis object
 #' @export
 add_scale_ <- function(vis, ...) {
@@ -114,7 +114,7 @@ add_scale_ <- function(vis, ...) {
 #' Add a axis
 #'
 #' @param vis a ggvis object
-#' @param ... vega axis properties
+#' @inheritDotParams vega_axis
 #' @return a ggvis object
 #' @export
 add_axis_ <- function(vis, ...) {
@@ -131,7 +131,7 @@ add_axis_ <- function(vis, ...) {
 #' Add a vega signal to a vega vis
 #'
 #' @param vis a ggvis object
-#' @param ... vega signal properties
+#' @inheritDotParams vega_signal
 #' @return a ggvis object
 #' @export
 add_signal_ <- function(vis, ...) {
@@ -164,7 +164,7 @@ add_signal_ <- function(vis, ...) {
 #' if the signal name isn't found int he vis, it is added
 #'
 #' @param vis a ggvis object
-#' @param ... vega signal properties
+#' @inheritDotParams vega_signal
 #' @return a ggvis object
 #' @export
 update_signal_ <- function(vis, ...) {
@@ -206,7 +206,7 @@ update_signal_ <- function(vis, ...) {
 #' Note: legend is simply appended without trying to identify other legends for the scale the legend applies to
 #'
 #' @param vis a ggvis object
-#' @param ... vega legend properties
+#' @inheritDotParams vega_legend
 #' @return a ggvis object
 #' @export
 add_legend_ <- function(vis, ...) {
@@ -224,7 +224,7 @@ add_legend_ <- function(vis, ...) {
 #' Add a vega projection to a vega vis
 #'
 #' @param vis a ggvis object
-#' @param ... vega projection properties
+#' @inheritDotParams vega_projection
 #' @return a ggvis object
 #' @export
 add_projection <- function(vis, ...) {
@@ -259,7 +259,7 @@ add_projection <- function(vis, ...) {
 #' @param vis a ggvis object
 #' @param name string a data or mark object name
 #' @param type string type of transform to add
-#' @param ... vega transform properties
+#' @param ... arguments to transforms
 #' @return a ggvis object
 #' @export
 add_transform <- function(vis, name, type, ...) {

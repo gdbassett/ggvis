@@ -9,7 +9,17 @@ add_signal_(vis, ...)
 \arguments{
 \item{vis}{a ggvis object}
 
-\item{...}{vega signal properties}
+\item{...}{Arguments passed on to \code{vega_signal}
+\describe{
+  \item{name}{String Required. A unique name for the signal. Signal names should be valid JavaScript identifiers: they should contain only alphanumeric characters (or “$”, or “_”) and may not start with a digit. Reserved keywords that may not be used as signal names are "datum", "event", and "parent".}
+  \item{bind}{Bind Binds the signal to an external input element such as a slider, selection list or radio button group.}
+  \item{description}{String A text description of the signal, useful for inline documentation.}
+  \item{on}{Handler[] An array of event stream handlers for updating the signal value in response to input events.}
+  \item{push}{String    Required. To indicate an update to a signal defined in an outer scope, the push property must be set to "outer".}
+  \item{update}{Expression An update expression for the value of the signal. This expression may include other signals, in which case the signal will automatically update in response to upstream signal changes, so long as the react property is not false.}
+  \item{react}{Boolean A boolean flag (default true) indicating if the update expression should be automatically re-evaluated when any upstream signal dependencies update. If false, the update expression will only be run upon initialization.}
+  \item{value}{Any The initial value of the signal (default undefined).}
+}}
 }
 \value{
 a ggvis object

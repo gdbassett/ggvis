@@ -14,7 +14,29 @@ vega_title(text, name = NULL, orient = NULL, anchor = NULL,
 \arguments{
 \item{vis}{a ggvis object}
 
-\item{...}{vega title properties}
+\item{...}{Arguments passed on to \code{vega_title}
+\describe{
+  \item{text}{string. Required. The title text.}
+  \item{orient}{string. The orientation of the title relative to the chart. One of top
+(the default), bottom, left, or right.}
+  \item{anchor}{string. The anchor position for placing the title. One of start,
+middle (the default), or end. For example, with an orientation of top these anchor
+positions map to a left-, center-, or right-aligned title.}
+  \item{encode}{list. The anchor position for placing the title. One of start, middle
+(the default), or end. For example, with an orientation of top these anchor
+positions map to a left-, center-, or right-aligned title.}
+  \item{interactive}{logical.  Optional mark encodings for custom title styling. This
+is a standard encode block for text marks, and may contain enter, exit, update, and
+hover property sets. To set a custom font, font size, etc. for a title, one can
+either use custom encode blocks or update the title config.}
+  \item{name}{string. A mark name property to apply to the title text mark.}
+  \item{style}{string. A mark style property to apply to the title text mark. If not
+specified, a default style of "group-title" is applied.}
+  \item{offset}{number.  The orthogonal offset in pixels by which to displace the title
+from its position along the edge of the chart.}
+  \item{zindex}{number. The integer z-index indicating the layering of the title group
+relative to other axis, mark and legend groups. The default value is 0.}
+}}
 
 \item{text}{string. Required. The title text.}
 
