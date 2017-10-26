@@ -4,14 +4,25 @@
 \alias{vega_input}
 \title{return a vega input binding object}
 \usage{
-vega_input(input, element = NULL, debounce = NULL)
+vega_input(input, element = NULL, options = NULL, max = NULL,
+  min = NULL, step = NULL, debounce = NULL, ...)
 }
 \arguments{
 \item{input}{String Required. The type of input element to use. The valid values are checkbox, radio, range, select, and any other legal HTML form input type.}
 
 \item{element}{String An optional CSS selector string indicating the parent element to which the input element should be added. By default, all input elements are added within the parent container of the Vega view.}
 
+\item{options}{Array Required for radio and select inputs. An array of options to select from.}
+
+\item{max}{Number For range inputs, sets the maximum slider value. Defaults to the larger of the signal value and 100.}
+
+\item{min}{Number For range inputs, sets the minimum slider value. Defaults to the smaller of the signal value and 0.}
+
+\item{step}{Number For range inputs, sets the minimum slider increment. If undefined, the step size will be automatically determined based on the min and max values.}
+
 \item{debounce}{Number If defined, delays event handling until the specified milliseconds have elapsed since the last event was fired.}
+
+\item{...}{Extra properties defined (e.g., placeholder for "text" input) will be added as attributes of the generated HTML form element.}
 }
 \value{
 a vega input object

@@ -1,4 +1,6 @@
 # ggvis 0.4.3.9XXX
+* 9020: adding layer_line_.  not yet tested
+
 * 9019: slight update to documentation
 
 * 9018: aggregate transform in layer_bars2 seems to be working.

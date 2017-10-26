@@ -10,7 +10,7 @@
 #' @param bind Bind Binds the signal to an external input element such as a slider, selection list or radio button group.
 #' @param description String A text description of the signal, useful for inline documentation.
 #' @param on Handler[] An array of event stream handlers for updating the signal value in response to input events.
-#' @param push	String	Required. To indicate an update to a signal defined in an outer scope, the push property must be set to "outer".
+#' @param push	String	Required for nested signals. To indicate an update to a signal defined in an outer scope, the push property must be set to "outer".
 #' @param update Expression An update expression for the value of the signal. This expression may include other signals, in which case the signal will automatically update in response to upstream signal changes, so long as the react property is not false.
 #' @param react Boolean A boolean flag (default true) indicating if the update expression should be automatically re-evaluated when any upstream signal dependencies update. If false, the update expression will only be run upon initialization.
 #' @param value Any The initial value of the signal (default undefined).
@@ -114,15 +114,26 @@ vega_event <- function(
 #'
 #' @param input String Required. The type of input element to use. The valid values are checkbox, radio, range, select, and any other legal HTML form input type.
 #' @param element String An optional CSS selector string indicating the parent element to which the input element should be added. By default, all input elements are added within the parent container of the Vega view.
+#' @param options Array Required for radio and select inputs. An array of options to select from.
+#' @param max Number For range inputs, sets the maximum slider value. Defaults to the larger of the signal value and 100.
+#' @param min Number For range inputs, sets the minimum slider value. Defaults to the smaller of the signal value and 0.
+#' @param step Number For range inputs, sets the minimum slider increment. If undefined, the step size will be automatically determined based on the min and max values.
 #' @param debounce Number If defined, delays event handling until the specified milliseconds have elapsed since the last event was fired.
+#' @param ... Extra properties defined (e.g., placeholder for "text" input) will be added as attributes of the generated HTML form element.
 #' @return a vega input object
 #' @export
 vega_input <- function(
   input,
   element=NULL,
-  debounce=NULL
+  options=NULL,
+  max=NULL,
+  min=NULL,
+  step=NULL,
+  debounce=NULL,
+  ...
 ) {
-  args <- list(input=input, element=element, debounce=debounce)
+  args <- list(input=input, element=element, options=options, max=max, min=min, step=step, debounce=debounce)
+  args <- c(args, list(...))
   args <- args[!unlist(lapply(args, is.null))]
 
   is.vega_input(args, error=TRUE)

@@ -134,7 +134,7 @@
 #' @param view.group object. Default properties for the top-level group mark
 #'   representing the data rectangle of a chart. Valid properties of this object are
 #'   mark properties such as "fill", "stroke" and "strokeWidth".
-#' @param event object. An object describing which events that originate within the
+#' @param events object. An object describing which events that originate within the
 #'   Vega view should have their default behavior suppressed by invoking the
 #'   event.preventDefault method. The defaults object should have a single
 #'   property: either "prevent" (to indicate which events should have default behavior
@@ -189,7 +189,7 @@ vega_config <- function(
   view.autosize = NULL,
   view.background = NULL,
   view.group = NULL,
-  event  = NULL,
+  events = NULL,
   mark = NULL,
   style = NULL,
   axis=NULL,
@@ -198,7 +198,7 @@ vega_config <- function(
   scale.range = NULL
 ) {
   args <- list(autosize=view.autosize, background=view.background, group=view.group,
-               events=list(defaults=event), mark=mark, style=style, axis=axis, legend=legend, title=title,
+               events=list(defaults=events), mark=mark, style=style, axis=axis, legend=legend, title=title,
                range=scale.range)
   args <- args[!unlist(lapply(args, is.null))]
 

@@ -73,7 +73,7 @@
 #' # If grouping var is categorical, grouping is done automatically
 #' cocaine %>% ggvis(x = ~state, fill = ~as.factor(month)) %>%
 #'   layer_bars()
-layer_bars2 <- function(vis, ..., from=NULL, group=NULL, stack = TRUE, id=NULL) {
+layer_bars_ <- function(vis, ..., from=NULL, group=NULL, stack = TRUE, id=NULL) {
 
   unsupported_encodes <- setdiff(names(rlang::quos(...)), c("x", "y", "enter", "exit", "hover"))
   if (length(unsupported_encodes) > 0) stop(paste0("Encodes ", paste(unsupported_encodes, collapse=", ", " are unsupported in bar charts.")))
@@ -81,13 +81,13 @@ layer_bars2 <- function(vis, ..., from=NULL, group=NULL, stack = TRUE, id=NULL) 
   # added so that items generated in layer can be uniquely identified in schema object. - gdb 171005
   if (is.null(id)) {
     id <- rand_id()
-    message(paste0("layer_bars2 'id' is ", id)) # may want to remove this later
+    message(paste0("layer_bars_ 'id' is ", id)) # may want to remove this later
   }
 
   # added so data can be from existing vis or new. gdb 171005
   if (is.null(from)) {
     from <- vis$properties[!is.na(vis$properties$from), 'from']
-    if (length(unique(from)) > 1) message(paste0("'from' missing for layer_bars2 layer ", id, ".  Guessing ", from[1], "."))
+    if (length(unique(from)) > 1) message(paste0("'from' missing for layer_bars_ layer ", id, ".  Guessing ", from[1], "."))
     from <- from[1]
   } else if (is.character(from)) {
     if (!from %in% unlist(purrr::map(vis$vega$data, "name")))
@@ -101,19 +101,19 @@ layer_bars2 <- function(vis, ..., from=NULL, group=NULL, stack = TRUE, id=NULL) 
 
   # deduplicate properties
   props <- props[!duplicated(props$encode), ]
-  if (!"x" %in% props$encode) stop("Layer_bar2 requires a 'x' encode be defined.")
+  if (!"x" %in% props$encode) stop("Layer_bar_ requires a 'x' encode be defined.")
 
   # add y as a count of x (implemented as a transform on the associated 'from'
   if (!"y" %in% props$encode) {
     locs <- which(from %in% unlist(purrr::map(vis$vega$data, "name")))
 
     vis <- add_transform(vis, name = from, "aggregate", groupby=I(props[props$encode=='x', 'field']), ops=I("count"), as=I("count"))
-    props <- rbind(props, data.frame(value=FALSE, encode="y", from=from, field="count"))
+    props <- rbind(data.frame(value=FALSE, encode="y", from=from, field="count"), props)
   }
 
   if (TRUE) { # used to be 'discrete_x'.  Not sure this is necessary.
     if (!"width" %in% props$encode) {
-      props <- rbind(props, data.frame(value=TRUE, encode="width", from=NA, field=1, stringsAsFactors = FALSE)) # from field=0.9
+      props <- rbind(props, data.frame(value=TRUE, encode="width", from=NA, field=I(1), stringsAsFactors = FALSE)) # from field=0.9
     }
 
     if (stack || !is.null(group)) {
@@ -125,7 +125,8 @@ layer_bars2 <- function(vis, ..., from=NULL, group=NULL, stack = TRUE, id=NULL) 
       ))
       vis <- add_mark_(vis, type="rect", from = list(data=from), encode=e, name=paste0("mark_", id))
     } else {
-      # creat group mark
+      # TODO: Rather than adding a group mark this should probably be a transorm + normal mark. ie remove this part and the 'group' attribute. - gdb 171023
+      # create group mark
       s <- vega_scale() # TODO
       e <- vega_encode(update=list(y = list(scale="y", field=group)))
       g <- vega_mark(type="group", from=list(data=from), encode=e, scales=list(s), name=paste0("group_mark_", id))

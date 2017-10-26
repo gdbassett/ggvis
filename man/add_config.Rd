@@ -19,7 +19,7 @@ transparent.}
   \item{view.group}{object. Default properties for the top-level group mark
 representing the data rectangle of a chart. Valid properties of this object are
 mark properties such as "fill", "stroke" and "strokeWidth".}
-  \item{event}{object. An object describing which events that originate within the
+  \item{events}{object. An object describing which events that originate within the
 Vega view should have their default behavior suppressed by invoking the
 event.preventDefault method. The defaults object should have a single
 property: either "prevent" (to indicate which events should have default behavior

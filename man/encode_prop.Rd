@@ -4,7 +4,7 @@
 \alias{encode_prop}
 \title{convert a line of a properties dataframe to a list of encode parameters}
 \usage{
-encode_prop(prop, scale = NULL)
+encode_prop(prop, scale = NA)
 }
 \arguments{
 \item{prop}{a one-line properties data frame. (If more lines exist, only the first

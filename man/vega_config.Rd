@@ -5,7 +5,7 @@
 \title{Defines default visual values to set a visualization’s theme.}
 \usage{
 vega_config(view.autosize = NULL, view.background = NULL,
-  view.group = NULL, event = NULL, mark = NULL, style = NULL,
+  view.group = NULL, events = NULL, mark = NULL, style = NULL,
   axis = NULL, legend = NULL, title = NULL, scale.range = NULL)
 }
 \arguments{
@@ -20,7 +20,7 @@ transparent.}
 representing the data rectangle of a chart. Valid properties of this object are
 mark properties such as "fill", "stroke" and "strokeWidth".}
 
-\item{event}{object. An object describing which events that originate within the
+\item{events}{object. An object describing which events that originate within the
 Vega view should have their default behavior suppressed by invoking the
 event.preventDefault method. The defaults object should have a single
 property: either "prevent" (to indicate which events should have default behavior

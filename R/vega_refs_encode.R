@@ -83,7 +83,8 @@ vega_encode <- function(
 #'   line will be used.)
 #' @param scale string a scale name
 #' @return list of encode properties
-encode_prop <- function(prop, scale=NULL) {
+#' @export
+encode_prop <- function(prop, scale=NA) {
   # if prop is a list, return it.
   if (class(prop) == "list") {
     return(prop)
@@ -93,12 +94,22 @@ encode_prop <- function(prop, scale=NULL) {
 
   ret <- list()
   # if it's a value, just return the value
-  if (prop$value) ret <- list(value=prop$field)
+  #if (prop$value) ret <- list(value=I(prop$field))
+  quiet_as_numeric <- purrr::quietly(as.numeric)
+  if (prop$value) {
+    if (is.na(quiet_as_numeric(prop$field)$result)) {
+      ret <- list(value=prop$field)
+    } else {
+      ret <- list(value=as.numeric(prop$field))
+    }
+  }
 
   # if it's a field, set that
+  # if (!prop$value) ret <- list(field=I(prop$field))
   if (!prop$value) ret <- list(field=prop$field)
 
-  if (!is.null(scale)) ret <- c(ret, list(scale=scale))
+  # if (!is.na(scale)) ret <- c(ret, list(scale=I(scale)))
+  if (!is.na(scale)) ret <- c(ret, list(scale=scale))
 
   ret
 }

@@ -16,7 +16,7 @@ vega_signal(name = NULL, bind = NULL, description = NULL, on = NULL,
 
 \item{on}{Handler[] An array of event stream handlers for updating the signal value in response to input events.}
 
-\item{push}{String    Required. To indicate an update to a signal defined in an outer scope, the push property must be set to "outer".}
+\item{push}{String    Required for nested signals. To indicate an update to a signal defined in an outer scope, the push property must be set to "outer".}
 
 \item{update}{Expression An update expression for the value of the signal. This expression may include other signals, in which case the signal will automatically update in response to upstream signal changes, so long as the react property is not false.}
 
