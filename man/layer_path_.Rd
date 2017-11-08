@@ -4,7 +4,7 @@
 \alias{layer_path_}
 \title{Generate a path chart}
 \usage{
-layer_path_(vis, ..., from = NULL, stack = TRUE, arrange = NULL,
+layer_path_(vis, ..., from = NULL, stack = FALSE, arrange = NULL,
   id = NULL)
 }
 \arguments{

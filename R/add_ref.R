@@ -24,27 +24,54 @@ add_config <- function(vis, ...) {
 #' Add a mark
 #'
 #' @param vis a ggvis object
+#' @param parent Place within a group_mark.  Default = FALSE.
+#'   If 'TRUE', the mark will be placed within the first group mark.
+#'   If an integer (N), the mark will be placed within the Nth group mark.
+#'   If a name, will be placed in the group mark with the given name.
 #' @inheritDotParams vega_mark
 #' @return a ggvis object
 #' @export
-add_mark_ <- function(vis, ...) {
+add_mark_ <- function(vis, parent=FALSE, ...) {
+  if (parent == FALSE) {
+    dest <- vis$vega
+    group_mark <- FALSE
+  } else if (parent == TRUE) {
+    group_mark <- which("group" %in% unlist(purrr::map(vis$vega$marks, "type")))[1]
+    dest <- vis$vega$marks[[group_mark]]
+  } else if (is.integer(parent)) {
+    group_mark <- which("group" %in% unlist(purrr::map(vis$vega$marks, "type")))[parent]
+    dest <- vis$vega$marks[[group_mark]]
+  } else if (is.character(parent)) {
+    group_mark <- which(parent %in% unlist(purrr::map(vis$vega$marks, "name")))[1]
+    dest <- vis$vega$marks[[group_mark]]
+  } else {
+    stop(paste0("Parent ", parent, " is not a valid value."))
+  }
+
   mark <- vega_mark(...)
 
   #
-  if (!"marks" %in% names(vis$vega)) vis$vega$marks <- list()
+  if (!"marks" %in% names(dest)) dest$marks <- list()
 
   # check if named marks exist in both the incoming mark and vis
   if ("name" %in% names(mark)) {
-    locs <- which(mark$name %in% unlist(purrr::map(vis$vega$marks, "name")))
+    locs <- which(mark$name %in% unlist(purrr::map(dest$marks, "name")))
   } else {
     locs <- c()
   }
 
   # if there's any overlap in names, replace the mark, otherwise add the mark
   if (length(locs) > 0) {
-    vis$vega$marks[locs] <- list(mark)
+    dest$marks[locs] <- list(mark)
   } else {
-    vis$vega$marks[[length(vis$vega$mark) + 1]] <- mark
+    dest$marks[[length(dest$mark) + 1]] <- mark
+  }
+
+  # put dest back
+  if (parent != FALSE) {
+    vis$vega$marks[[group_mark]] <- dest
+  } else {
+    vis$vega <- dest
   }
 
   # return
@@ -63,7 +90,7 @@ add_group_mark <- function(group_mark, ...) {
   #
   if (!"marks" %in% names(group_mark)) group_mark$marks <- list()
 
-  # check if named marks exist in both the incoming mark and vis
+  # check if named marks exist in both the incoming mark and group_mark
   if ("name" %in% names(mark)) {
     locs <- which(mark$name %in% unlist(purrr::map(group_mark$marks, "name")))
   } else {

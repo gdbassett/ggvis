@@ -1,4 +1,39 @@
 # ggvis 0.4.3.9XXX
+* 9022: added `insert()` to deep insert value within vega for changing tings like an individual axis feature or such.
+
+* 9021: layer_line_ working.
+vz %>%
+  dplyr::filter(subset.2017dbir) %>%
+  dplyr::filter(timeline.incident.year >= 2010) %>%
+  dbirR::getenumCI("action", by="timeline.incident.year")
+chunk <- chunk %>%
+  dplyr::filter(!is.na(n))
+chunk2 <- do.call(rbind, lapply(unique(chunk$enum), function(e) {
+  vz %>%
+    dplyr::filter(subset.2017dbir) %>%
+    dplyr::filter(timeline.incident.year >= 2010) %>%
+    dbirR::getenumCI(paste0("action.", tolower(e), ".variety"), by="timeline.incident.year") %>%
+    dplyr::mutate(chunk = e)
+}))
+chunk$chunk <- "Action"
+chunk <- rbind(chunk, chunk2)
+p <- chunk %>%
+    ggvis::ggvega(x=by, y=freq) %>%
+    ggvis::add_transform(type = "filter", name=".", expr="signal_clicked.value === datum.chunk") %>%
+    ggvis::layer_line_(group=enum) %>%
+    ggvis::add_legend_(stroke = "color", encode=list(symbols=list(interactive=TRUE, name="legendSymbol"), labels=list(interactive=TRUE, name="legendLabel"))) %>%
+    ggvis::add_signal_(name="signal_clicked", 
+                       value=list(value="Action"), 
+                       on=list(list(events="@legendSymbol:click, @legendLabel:click",
+                                    update="{value: datum.value}",
+                                    force=TRUE), 
+                               list(events="mouseup[!event.item]", 
+                                    update="{value: 'Action'}",
+                                    force=TRUE)
+                               )
+                       )
+htmlwidgets::saveWidget(vega_render(jsonlite::toJSON(p$vega, auto_unbox = TRUE, force = TRUE, null = "null")), file = "/Users/v685573/Downloads/interactive_line_chart.html", selfcontained = TRUE)
+
 * 9020: adding layer_line_.  not yet tested
 
 * 9019: slight update to documentation

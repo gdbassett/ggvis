@@ -20,5 +20,10 @@ data or transform fields)}
 }}
 }
 \description{
+Assumptions:
+  - y is numeric
+  - all columns beyond x, y, and grouping will be aggregated
+}
+\details{
 The only difference between a line and path chart is the line chart is ordered
 }

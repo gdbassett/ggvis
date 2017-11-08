@@ -71,7 +71,7 @@ layer_path_ <- function(vis, ..., from=NULL, stack = FALSE, arrange=NULL, id=NUL
 
   # If stacked, create a stacked transform
   if (stack) {
-    vis <- add_transform(vis, name = from, "stack", groupby=I(props[props$encode=='x', 'field'][1]), field="y", as=I("stack0", "stack1"))
+    vis <- add_transform(vis, name = from, "stack", groupby=I(props[props$encode=='x', 'field'][1]), field="y", as=c("stack0", "stack1"))
     props <- rbind(data.frame(value=FALSE, encode="y", from=from, field="stack1", stringsAsFactors = FALSE), props)
   }
 
@@ -103,9 +103,11 @@ layer_path_ <- function(vis, ..., from=NULL, stack = FALSE, arrange=NULL, id=NUL
   # add the mark
   if ("group" %in% props$encode) {
     # add group mark to visualization
-    g <- vega_mark(type="group", from = list(facet=list(name=paste0(from, "_facet"), data=from, groupby=props[props$encode == "group", 'field'])), name=paste0("group_mark_", id))
-    g <- add_group_mark(g, type="line", from=I(list(data=paste0(from, "_facet"))), encode=e, name=paste0("mark_", id))
-    vis <- add_mark_(vis, g)
+    #g <- vega_mark(type="group", from = list(facet=list(name=paste0(from, "_facet"), data=from, groupby=props[props$encode == "group", 'field'])), name=paste0("group_mark_", id))
+    #g <- add_group_mark(g, type="line", from=I(list(data=paste0(from, "_facet"))), encode=e, name=paste0("mark_", id))
+    #vis <- add_mark_(vis, g)
+    vis <- add_mark_(vis, type="group", from = list(facet=list(name=paste0(from, "_facet"), data=from, groupby=props[props$encode == "group", 'field'])), name=paste0("group_mark_", id)) # group mark
+    vis <- add_mark_(vis, parent=paste0("group_mark_", id), type="line", from=I(list(data=paste0(from, "_facet"))), encode=e, name=paste0("mark_", id))
   } else {
     vis <- add_mark_(vis, type="line", from = list(data=from), encode=e, name=paste0("mark_", id))
   }

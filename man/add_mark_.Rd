@@ -4,10 +4,15 @@
 \alias{add_mark_}
 \title{Add a mark}
 \usage{
-add_mark_(vis, ...)
+add_mark_(vis, parent = FALSE, ...)
 }
 \arguments{
 \item{vis}{a ggvis object}
+
+\item{parent}{Place within a group_mark.  Default = FALSE.
+If 'TRUE', the mark will be placed within the first group mark.
+If an integer (N), the mark will be placed within the Nth group mark.
+If a name, will be placed in the group mark with the given name.}
 
 \item{...}{Arguments passed on to \code{vega_mark}
 \describe{
